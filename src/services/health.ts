@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    UploadProgress,
+} from '../client';
 import type { Models } from '../models';
 import { Name } from '../enums/name';
 
@@ -24,14 +29,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get antivirus
@@ -48,14 +48,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get cache
@@ -72,14 +67,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get the SSL certificate for a domain
@@ -100,14 +90,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get DB
@@ -124,14 +109,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get pubsub
@@ -148,14 +128,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get queue
@@ -172,14 +147,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get builds queue
@@ -200,14 +170,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get certificates queue
@@ -218,7 +183,9 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    async getQueueCertificates(threshold?: number): Promise<Models.HealthQueue> {
+    async getQueueCertificates(
+        threshold?: number,
+    ): Promise<Models.HealthQueue> {
         const apiPath = '/health/queue/certificates';
         const payload: Payload = {};
         if (typeof threshold !== 'undefined') {
@@ -228,26 +195,27 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get databases queue
      *
      * Get the number of database changes that are waiting to be processed in the Appwrite internal queue server.
      *
-     * @param {string} name
-     * @param {number} threshold
+     * @param {Object} params
+     * @param {string} params.name
+     * @param {number} params.threshold
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    async getQueueDatabases(name?: string, threshold?: number): Promise<Models.HealthQueue> {
+    async getQueueDatabases(params?: {
+        name?: string;
+        threshold?: number;
+    }): Promise<Models.HealthQueue> {
+        const { name, threshold } = params || {};
+
         const apiPath = '/health/queue/databases';
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -260,14 +228,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get deletes queue
@@ -288,14 +251,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get number of failed queue jobs
@@ -308,7 +266,10 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    async getFailedJobs(name: Name, threshold?: number): Promise<Models.HealthQueue> {
+    async getFailedJobs(
+        name: Name,
+        threshold?: number,
+    ): Promise<Models.HealthQueue> {
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
@@ -321,14 +282,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get functions queue
@@ -349,14 +305,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get logs queue
@@ -377,14 +328,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get mails queue
@@ -405,14 +351,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get messaging queue
@@ -433,14 +374,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get migrations queue
@@ -461,14 +397,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get usage queue
@@ -489,14 +420,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get usage dump queue
@@ -517,14 +443,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get webhooks queue
@@ -545,14 +466,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get storage
@@ -569,14 +485,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get local storage
@@ -593,14 +504,9 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get time
@@ -617,13 +523,8 @@ export class Health {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 }

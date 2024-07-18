@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    UploadProgress,
+} from '../client';
 import type { Models } from '../models';
 
 export class Teams {
@@ -13,12 +18,18 @@ export class Teams {
      *
      * Get a list of all the teams in which the current user is a member. You can use the parameters to filter your results.
      *
-     * @param {string[]} queries
-     * @param {string} search
+     * @param {Object} params
+     * @param {string[]} params.queries
+     * @param {string} params.search
      * @throws {AppwriteException}
      * @returns {Promise<Models.TeamList<Preferences>>}
      */
-    async list<Preferences extends Models.Preferences>(queries?: string[], search?: string): Promise<Models.TeamList<Preferences>> {
+    async list<Preferences extends Models.Preferences>(params?: {
+        queries?: string[];
+        search?: string;
+    }): Promise<Models.TeamList<Preferences>> {
+        const { queries, search } = params || {};
+
         const apiPath = '/teams';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -31,15 +42,11 @@ export class Teams {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
+
     /**
      * Create team
      *
@@ -51,7 +58,11 @@ export class Teams {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Team<Preferences>>}
      */
-    async create<Preferences extends Models.Preferences>(teamId: string, name: string, roles?: string[]): Promise<Models.Team<Preferences>> {
+    async create<Preferences extends Models.Preferences>(
+        teamId: string,
+        name: string,
+        roles?: string[],
+    ): Promise<Models.Team<Preferences>> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
@@ -73,15 +84,11 @@ export class Teams {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
+
     /**
      * Get team
      *
@@ -91,7 +98,9 @@ export class Teams {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Team<Preferences>>}
      */
-    async get<Preferences extends Models.Preferences>(teamId: string): Promise<Models.Team<Preferences>> {
+    async get<Preferences extends Models.Preferences>(
+        teamId: string,
+    ): Promise<Models.Team<Preferences>> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
@@ -101,15 +110,11 @@ export class Teams {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
+
     /**
      * Update name
      *
@@ -120,7 +125,10 @@ export class Teams {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Team<Preferences>>}
      */
-    async updateName<Preferences extends Models.Preferences>(teamId: string, name: string): Promise<Models.Team<Preferences>> {
+    async updateName<Preferences extends Models.Preferences>(
+        teamId: string,
+        name: string,
+    ): Promise<Models.Team<Preferences>> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
@@ -136,15 +144,11 @@ export class Teams {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('put', uri, apiHeaders, payload);
     }
+
     /**
      * Delete team
      *
@@ -164,31 +168,36 @@ export class Teams {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('delete', uri, apiHeaders, payload);
     }
+
     /**
      * List team memberships
      *
      * Use this endpoint to list a team&#039;s members using the team&#039;s ID. All team members have read access to this endpoint.
      *
      * @param {string} teamId
-     * @param {string[]} queries
-     * @param {string} search
+     * @param {Object} params
+     * @param {string[]} params.queries
+     * @param {string} params.search
      * @throws {AppwriteException}
      * @returns {Promise<Models.MembershipList>}
      */
-    async listMemberships(teamId: string, queries?: string[], search?: string): Promise<Models.MembershipList> {
+    async listMemberships(
+        teamId: string,
+        params?: { queries?: string[]; search?: string },
+    ): Promise<Models.MembershipList> {
+        const { queries, search } = params || {};
+
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
-        const apiPath = '/teams/{teamId}/memberships'.replace('{teamId}', teamId);
+        const apiPath = '/teams/{teamId}/memberships'.replace(
+            '{teamId}',
+            teamId,
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -200,15 +209,11 @@ export class Teams {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
+
     /**
      * Create team membership
      *
@@ -223,22 +228,38 @@ Please note that to avoid a [Redirect Attack](https://github.com/OWASP/CheatShee
      *
      * @param {string} teamId
      * @param {string[]} roles
-     * @param {string} email
-     * @param {string} userId
-     * @param {string} phone
-     * @param {string} url
-     * @param {string} name
+     * @param {Object} params
+     * @param {string} params.email
+     * @param {string} params.userId
+     * @param {string} params.phone
+     * @param {string} params.url
+     * @param {string} params.name
      * @throws {AppwriteException}
      * @returns {Promise<Models.Membership>}
      */
-    async createMembership(teamId: string, roles: string[], email?: string, userId?: string, phone?: string, url?: string, name?: string): Promise<Models.Membership> {
+    async createMembership(
+        teamId: string,
+        roles: string[],
+        params?: {
+            email?: string;
+            userId?: string;
+            phone?: string;
+            url?: string;
+            name?: string;
+        },
+    ): Promise<Models.Membership> {
+        const { email, userId, phone, url, name } = params || {};
+
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
         if (typeof roles === 'undefined') {
             throw new AppwriteException('Missing required parameter: "roles"');
         }
-        const apiPath = '/teams/{teamId}/memberships'.replace('{teamId}', teamId);
+        const apiPath = '/teams/{teamId}/memberships'.replace(
+            '{teamId}',
+            teamId,
+        );
         const payload: Payload = {};
         if (typeof email !== 'undefined') {
             payload['email'] = email;
@@ -262,15 +283,11 @@ Please note that to avoid a [Redirect Attack](https://github.com/OWASP/CheatShee
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
+
     /**
      * Get team membership
      *
@@ -281,28 +298,31 @@ Please note that to avoid a [Redirect Attack](https://github.com/OWASP/CheatShee
      * @throws {AppwriteException}
      * @returns {Promise<Models.Membership>}
      */
-    async getMembership(teamId: string, membershipId: string): Promise<Models.Membership> {
+    async getMembership(
+        teamId: string,
+        membershipId: string,
+    ): Promise<Models.Membership> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
         if (typeof membershipId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "membershipId"');
+            throw new AppwriteException(
+                'Missing required parameter: "membershipId"',
+            );
         }
-        const apiPath = '/teams/{teamId}/memberships/{membershipId}'.replace('{teamId}', teamId).replace('{membershipId}', membershipId);
+        const apiPath = '/teams/{teamId}/memberships/{membershipId}'
+            .replace('{teamId}', teamId)
+            .replace('{membershipId}', membershipId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
+
     /**
      * Update membership
      *
@@ -315,17 +335,25 @@ Please note that to avoid a [Redirect Attack](https://github.com/OWASP/CheatShee
      * @throws {AppwriteException}
      * @returns {Promise<Models.Membership>}
      */
-    async updateMembership(teamId: string, membershipId: string, roles: string[]): Promise<Models.Membership> {
+    async updateMembership(
+        teamId: string,
+        membershipId: string,
+        roles: string[],
+    ): Promise<Models.Membership> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
         if (typeof membershipId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "membershipId"');
+            throw new AppwriteException(
+                'Missing required parameter: "membershipId"',
+            );
         }
         if (typeof roles === 'undefined') {
             throw new AppwriteException('Missing required parameter: "roles"');
         }
-        const apiPath = '/teams/{teamId}/memberships/{membershipId}'.replace('{teamId}', teamId).replace('{membershipId}', membershipId);
+        const apiPath = '/teams/{teamId}/memberships/{membershipId}'
+            .replace('{teamId}', teamId)
+            .replace('{membershipId}', membershipId);
         const payload: Payload = {};
         if (typeof roles !== 'undefined') {
             payload['roles'] = roles;
@@ -334,15 +362,11 @@ Please note that to avoid a [Redirect Attack](https://github.com/OWASP/CheatShee
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
+
     /**
      * Delete team membership
      *
@@ -358,23 +382,23 @@ Please note that to avoid a [Redirect Attack](https://github.com/OWASP/CheatShee
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
         if (typeof membershipId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "membershipId"');
+            throw new AppwriteException(
+                'Missing required parameter: "membershipId"',
+            );
         }
-        const apiPath = '/teams/{teamId}/memberships/{membershipId}'.replace('{teamId}', teamId).replace('{membershipId}', membershipId);
+        const apiPath = '/teams/{teamId}/memberships/{membershipId}'
+            .replace('{teamId}', teamId)
+            .replace('{membershipId}', membershipId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('delete', uri, apiHeaders, payload);
     }
+
     /**
      * Update team membership status
      *
@@ -390,12 +414,19 @@ If the request is successful, a session for the user is automatically created.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Membership>}
      */
-    async updateMembershipStatus(teamId: string, membershipId: string, userId: string, secret: string): Promise<Models.Membership> {
+    async updateMembershipStatus(
+        teamId: string,
+        membershipId: string,
+        userId: string,
+        secret: string,
+    ): Promise<Models.Membership> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
         if (typeof membershipId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "membershipId"');
+            throw new AppwriteException(
+                'Missing required parameter: "membershipId"',
+            );
         }
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
@@ -403,7 +434,9 @@ If the request is successful, a session for the user is automatically created.
         if (typeof secret === 'undefined') {
             throw new AppwriteException('Missing required parameter: "secret"');
         }
-        const apiPath = '/teams/{teamId}/memberships/{membershipId}/status'.replace('{teamId}', teamId).replace('{membershipId}', membershipId);
+        const apiPath = '/teams/{teamId}/memberships/{membershipId}/status'
+            .replace('{teamId}', teamId)
+            .replace('{membershipId}', membershipId);
         const payload: Payload = {};
         if (typeof userId !== 'undefined') {
             payload['userId'] = userId;
@@ -415,15 +448,11 @@ If the request is successful, a session for the user is automatically created.
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
+
     /**
      * Get team preferences
      *
@@ -433,7 +462,9 @@ If the request is successful, a session for the user is automatically created.
      * @throws {AppwriteException}
      * @returns {Promise<Preferences>}
      */
-    async getPrefs<Preferences extends Models.Preferences>(teamId: string): Promise<Preferences> {
+    async getPrefs<Preferences extends Models.Preferences>(
+        teamId: string,
+    ): Promise<Preferences> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
@@ -443,15 +474,11 @@ If the request is successful, a session for the user is automatically created.
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
+
     /**
      * Update preferences
      *
@@ -462,7 +489,10 @@ If the request is successful, a session for the user is automatically created.
      * @throws {AppwriteException}
      * @returns {Promise<Preferences>}
      */
-    async updatePrefs<Preferences extends Models.Preferences>(teamId: string, prefs: object): Promise<Preferences> {
+    async updatePrefs<Preferences extends Models.Preferences>(
+        teamId: string,
+        prefs: object,
+    ): Promise<Preferences> {
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
@@ -478,13 +508,8 @@ If the request is successful, a session for the user is automatically created.
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('put', uri, apiHeaders, payload);
     }
 }

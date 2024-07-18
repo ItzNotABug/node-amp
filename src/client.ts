@@ -4,7 +4,7 @@ import { Models } from './models';
 
 type Payload = {
     [key: string]: any;
-}
+};
 
 type UploadProgress = {
     $id: string;
@@ -12,17 +12,22 @@ type UploadProgress = {
     sizeUploaded: number;
     chunksTotal: number;
     chunksUploaded: number;
-}
+};
 
 type Headers = {
     [key: string]: string;
-}
+};
 
 class AppwriteException extends Error {
     code: number;
     response: string;
     type: string;
-    constructor(message: string, code: number = 0, type: string = '', response: string = '') {
+    constructor(
+        message: string,
+        code: number = 0,
+        type: string = '',
+        response: string = '',
+    ) {
         super(message);
         this.name = 'AppwriteException';
         this.message = message;
@@ -38,9 +43,10 @@ function getUserAgent() {
     // `process` is a global in Node.js, but not fully available in all runtimes.
     const platform: string[] = [];
     if (typeof process !== 'undefined') {
-        if (typeof process.platform === 'string') platform.push(process.platform);
+        if (typeof process.platform === 'string')
+            platform.push(process.platform);
         if (typeof process.arch === 'string') platform.push(process.arch);
-    } 
+    }
     if (platform.length > 0) {
         ua += ` (${platform.join('; ')})`;
     }
@@ -49,16 +55,22 @@ function getUserAgent() {
     // It's also part of the WinterCG spec, so many edge runtimes provide it.
     // https://common-min-api.proposal.wintercg.org/#requirements-for-navigatoruseragent
     // @ts-ignore
-    if (typeof navigator !== 'undefined' && typeof navigator.userAgent === 'string') {
+    if (
+        typeof navigator !== 'undefined' &&
+        typeof navigator.userAgent === 'string'
+    ) {
         // @ts-ignore
         ua += ` ${navigator.userAgent}`;
 
-    // @ts-ignore
+        // @ts-ignore
     } else if (typeof globalThis.EdgeRuntime === 'string') {
         ua += ` EdgeRuntime`;
 
-    // Older Node.js versions don't have `navigator.userAgent`, so we have to use `process.version`.
-    } else if (typeof process !== 'undefined' && typeof process.version === 'string') {
+        // Older Node.js versions don't have `navigator.userAgent`, so we have to use `process.version`.
+    } else if (
+        typeof process !== 'undefined' &&
+        typeof process.version === 'string'
+    ) {
         ua += ` Node.js/${process.version}`;
     }
 
@@ -83,7 +95,7 @@ class Client {
         'x-sdk-platform': 'server',
         'x-sdk-language': 'nodejs',
         'x-sdk-version': '13.0.0',
-        'user-agent' : getUserAgent(),
+        'user-agent': getUserAgent(),
         'X-Appwrite-Response-Format': '1.5.0',
     };
 
@@ -217,7 +229,12 @@ class Client {
         return this;
     }
 
-    prepareRequest(method: string, url: URL, headers: Headers = {}, params: Payload = {}): { uri: string, options: RequestInit } {
+    prepareRequest(
+        method: string,
+        url: URL,
+        headers: Headers = {},
+        params: Payload = {},
+    ): { uri: string; options: RequestInit } {
         method = method.toUpperCase();
 
         headers = Object.assign({}, this.headers, headers);
@@ -225,7 +242,9 @@ class Client {
         let options: RequestInit = {
             method,
             headers,
-            ...createAgent(this.config.endpoint, { rejectUnauthorized: !this.config.selfSigned }),
+            ...createAgent(this.config.endpoint, {
+                rejectUnauthorized: !this.config.selfSigned,
+            }),
         };
 
         if (method === 'GET') {
@@ -262,8 +281,16 @@ class Client {
         return { uri: url.toString(), options };
     }
 
-    async chunkedUpload(method: string, url: URL, headers: Headers = {}, originalPayload: Payload = {}, onProgress: (progress: UploadProgress) => void) {
-        const file = Object.values(originalPayload).find((value) => value instanceof File);
+    async chunkedUpload(
+        method: string,
+        url: URL,
+        headers: Headers = {},
+        originalPayload: Payload = {},
+        onProgress: (progress: UploadProgress) => void,
+    ) {
+        const file = Object.values(originalPayload).find(
+            (value) => value instanceof File,
+        );
 
         if (file.size <= Client.CHUNK_SIZE) {
             return await this.call(method, url, headers, originalPayload);
@@ -278,10 +305,13 @@ class Client {
                 end = file.size; // Adjust for the last chunk to include the last byte
             }
 
-            headers['content-range'] = `bytes ${start}-${end-1}/${file.size}`;
+            headers['content-range'] = `bytes ${start}-${end - 1}/${file.size}`;
             const chunk = file.slice(start, end);
 
-            let payload = { ...originalPayload, file: new File([chunk], file.name)};
+            let payload = {
+                ...originalPayload,
+                file: new File([chunk], file.name),
+            };
 
             response = await this.call(method, url, headers, payload);
 
@@ -291,7 +321,7 @@ class Client {
                     progress: Math.round((end / file.size) * 100),
                     sizeUploaded: end,
                     chunksTotal: Math.ceil(file.size / Client.CHUNK_SIZE),
-                    chunksUploaded: Math.ceil(end / Client.CHUNK_SIZE)
+                    chunksUploaded: Math.ceil(end / Client.CHUNK_SIZE),
                 });
             }
 
@@ -305,12 +335,22 @@ class Client {
         return response;
     }
 
-    async redirect(method: string, url: URL, headers: Headers = {}, params: Payload = {}): Promise<string> {
-        const { uri, options } = this.prepareRequest(method, url, headers, params);
-        
+    async redirect(
+        method: string,
+        url: URL,
+        headers: Headers = {},
+        params: Payload = {},
+    ): Promise<string> {
+        const { uri, options } = this.prepareRequest(
+            method,
+            url,
+            headers,
+            params,
+        );
+
         const response = await fetch(uri, {
             ...options,
-            redirect: 'manual'
+            redirect: 'manual',
         });
 
         if (response.status !== 301 && response.status !== 302) {
@@ -320,25 +360,43 @@ class Client {
         return response.headers.get('location') || '';
     }
 
-    async call(method: string, url: URL, headers: Headers = {}, params: Payload = {}, responseType = 'json'): Promise<any> {
-        const { uri, options } = this.prepareRequest(method, url, headers, params);
+    async call(
+        method: string,
+        url: URL,
+        headers: Headers = {},
+        params: Payload = {},
+        responseType = 'json',
+    ): Promise<any> {
+        const { uri, options } = this.prepareRequest(
+            method,
+            url,
+            headers,
+            params,
+        );
 
         let data: any = null;
 
         const response = await fetch(uri, options);
 
-        if (response.headers.get('content-type')?.includes('application/json')) {
+        if (
+            response.headers.get('content-type')?.includes('application/json')
+        ) {
             data = await response.json();
         } else if (responseType === 'arrayBuffer') {
             data = await response.arrayBuffer();
         } else {
             data = {
-                message: await response.text()
+                message: await response.text(),
             };
         }
 
         if (400 <= response.status) {
-            throw new AppwriteException(data?.message, response.status, data?.type, data);
+            throw new AppwriteException(
+                data?.message,
+                response.status,
+                data?.type,
+                data,
+            );
         }
 
         return data;
@@ -348,7 +406,7 @@ class Client {
         let output: Payload = {};
 
         for (const [key, value] of Object.entries(data)) {
-            let finalKey = prefix ? prefix + '[' + key +']' : key;
+            let finalKey = prefix ? prefix + '[' + key + ']' : key;
             if (Array.isArray(value)) {
                 output = { ...output, ...Client.flatten(value, finalKey) };
             } else {

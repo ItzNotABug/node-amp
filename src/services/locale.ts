@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    UploadProgress,
+} from '../client';
 import type { Models } from '../models';
 
 export class Locale {
@@ -25,14 +30,9 @@ export class Locale {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * List Locale Codes
@@ -49,14 +49,9 @@ export class Locale {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * List continents
@@ -73,14 +68,9 @@ export class Locale {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * List countries
@@ -97,14 +87,9 @@ export class Locale {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * List EU countries
@@ -121,14 +106,9 @@ export class Locale {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * List countries phone codes
@@ -145,14 +125,9 @@ export class Locale {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * List currencies
@@ -169,14 +144,9 @@ export class Locale {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * List languages
@@ -193,13 +163,8 @@ export class Locale {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 }
