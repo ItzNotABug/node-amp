@@ -1,11 +1,15 @@
 {
-  "name": "node-appwrite",
-  "homepage": "https://appwrite.io/support",
-  "description": "Appwrite is an open-source self-hosted backend server that abstract and simplify complex and repetitive development tasks behind a very simple REST API",
-  "version": "13.0.0",
+  "name": "@itznotabug/node-amp",
+  "homepage": "https://github.com/itznotabug/node-amp",
+  "description": "Refactored Appwrite Node SDK with support for named parameter objects",
+  "version": "1.5.2",
   "license": "BSD-3-Clause",
   "main": "dist/index.js",
   "type": "commonjs",
+  "prettier": {
+    "tabWidth": 4,
+    "singleQuote": true
+  },
   "scripts": {
     "build": "tsup"
   },
@@ -38,7 +42,7 @@
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/appwrite/sdk-for-node"
+    "url": "https://github.com/itznotabug/node-amp"
   },
   "devDependencies": {
     "@types/node": "20.11.25",
