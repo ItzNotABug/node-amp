@@ -7,3 +7,5 @@
 **/*.env
 
 **/*-lock.json
+
+dist
