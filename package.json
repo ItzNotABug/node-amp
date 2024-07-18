@@ -11,7 +11,9 @@
     "singleQuote": true
   },
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "lint": "prettier . --check",
+    "format": "prettier . --write"
   },
   "exports": {
     ".": {
