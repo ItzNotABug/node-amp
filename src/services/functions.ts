@@ -50,27 +50,72 @@ export class Functions {
      * @param {string} functionId
      * @param {string} name
      * @param {Runtime} runtime
-     * @param {string[]} execute
-     * @param {string[]} events
-     * @param {string} schedule
-     * @param {number} timeout
-     * @param {boolean} enabled
-     * @param {boolean} logging
-     * @param {string} entrypoint
-     * @param {string} commands
-     * @param {string} installationId
-     * @param {string} providerRepositoryId
-     * @param {string} providerBranch
-     * @param {boolean} providerSilentMode
-     * @param {string} providerRootDirectory
-     * @param {string} templateRepository
-     * @param {string} templateOwner
-     * @param {string} templateRootDirectory
-     * @param {string} templateBranch
+     * @param {Object} params
+     * @param {string[]} params.execute
+     * @param {string[]} params.events
+     * @param {string} params.schedule
+     * @param {number} params.timeout
+     * @param {boolean} params.enabled
+     * @param {boolean} params.logging
+     * @param {string} params.entrypoint
+     * @param {string} params.commands
+     * @param {string} params.installationId
+     * @param {string} params.providerRepositoryId
+     * @param {string} params.providerBranch
+     * @param {boolean} params.providerSilentMode
+     * @param {string} params.providerRootDirectory
+     * @param {string} params.templateRepository
+     * @param {string} params.templateOwner
+     * @param {string} params.templateRootDirectory
+     * @param {string} params.templateBranch
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      */
-    async create(functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, templateRepository?: string, templateOwner?: string, templateRootDirectory?: string, templateBranch?: string): Promise<Models.Function> {
+    async create(
+        functionId: string,
+        name: string,
+        runtime: Runtime,
+        params: {
+            execute?: string[];
+             events?: string[];
+             schedule?: string;
+             timeout?: number;
+             enabled?: boolean;
+             logging?: boolean;
+             entrypoint?: string;
+             commands?: string;
+             installationId?: string;
+             providerRepositoryId?: string;
+             providerBranch?: string;
+             providerSilentMode?: boolean;
+             providerRootDirectory?: string;
+             templateRepository?: string;
+             templateOwner?: string;
+             templateRootDirectory?: string;
+             templateBranch?: string;
+        }
+    ): Promise<Models.Function> {
+        const {
+            execute,
+            events,
+            schedule,
+            timeout,
+            enabled,
+            logging,
+            entrypoint,
+            commands,
+            installationId,
+            providerRepositoryId,
+            providerBranch,
+            providerSilentMode,
+            providerRootDirectory,
+            templateRepository,
+            templateOwner,
+            templateRootDirectory,
+            templateBranch
+        } = params || {};
+
+
         if (typeof functionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
@@ -214,24 +259,61 @@ export class Functions {
      *
      * @param {string} functionId
      * @param {string} name
-     * @param {Runtime} runtime
-     * @param {string[]} execute
-     * @param {string[]} events
-     * @param {string} schedule
-     * @param {number} timeout
-     * @param {boolean} enabled
-     * @param {boolean} logging
-     * @param {string} entrypoint
-     * @param {string} commands
-     * @param {string} installationId
-     * @param {string} providerRepositoryId
-     * @param {string} providerBranch
-     * @param {boolean} providerSilentMode
-     * @param {string} providerRootDirectory
+     * @param {Object} params
+     * @param {Runtime} params.runtime
+     * @param {string[]} params.execute
+     * @param {string[]} params.events
+     * @param {string} params.schedule
+     * @param {number} params.timeout
+     * @param {boolean} params.enabled
+     * @param {boolean} params.logging
+     * @param {string} params.entrypoint
+     * @param {string} params.commands
+     * @param {string} params.installationId
+     * @param {string} params.providerRepositoryId
+     * @param {string} params.providerBranch
+     * @param {boolean} params.providerSilentMode
+     * @param {string} params.providerRootDirectory
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      */
-    async update(functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string): Promise<Models.Function> {
+    async update(
+        functionId: string,
+        name: string,
+        params?: {
+            runtime?: Runtime,
+            execute?: string[],
+            events?: string[],
+            schedule?: string,
+            timeout?: number,
+            enabled?: boolean,
+            logging?: boolean,
+            entrypoint?: string,
+            commands?: string,
+            installationId?: string,
+            providerRepositoryId?: string,
+            providerBranch?: string,
+            providerSilentMode?: boolean,
+            providerRootDirectory?: string
+        }
+    ): Promise<Models.Function> {
+        const {
+            runtime,
+            execute,
+            events,
+            schedule,
+            timeout,
+            enabled,
+            logging,
+            entrypoint,
+            commands,
+            installationId,
+            providerRepositoryId,
+            providerBranch,
+            providerSilentMode,
+            providerRootDirectory
+        } = params || {};
+
         if (typeof functionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
@@ -298,6 +380,7 @@ export class Functions {
             payload,
         );
     }
+
     /**
      * Delete function
      *
@@ -326,18 +409,22 @@ export class Functions {
             payload,
         );
     }
+
     /**
      * List deployments
      *
      * Get a list of all the project&#039;s code deployments. You can use the query params to filter your results.
      *
      * @param {string} functionId
-     * @param {string[]} queries
-     * @param {string} search
+     * @param {Object} params
+     * @param {string[]} params.queries
+     * @param {string} params.search
      * @throws {AppwriteException}
      * @returns {Promise<Models.DeploymentList>}
      */
-    async listDeployments(functionId: string, queries?: string[], search?: string): Promise<Models.DeploymentList> {
+    async listDeployments(functionId: string, params?: { queries?: string[], search?: string }): Promise<Models.DeploymentList> {
+        const {queries, search} = params || {};
+
         if (typeof functionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
@@ -362,6 +449,7 @@ export class Functions {
             payload,
         );
     }
+
     /**
      * Create deployment
      *
@@ -374,12 +462,25 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
      * @param {string} functionId
      * @param {File} code
      * @param {boolean} activate
-     * @param {string} entrypoint
-     * @param {string} commands
+     * @param {Object} params
+     * @param {string} params.entrypoint
+     * @param {string} params.commands
+     * @param {(UploadProgress) => {}} params.onProgress
      * @throws {AppwriteException}
      * @returns {Promise<Models.Deployment>}
      */
-    async createDeployment(functionId: string, code: File, activate: boolean, entrypoint?: string, commands?: string, onProgress = (progress: UploadProgress) => {}): Promise<Models.Deployment> {
+    async createDeployment(
+        functionId: string,
+        code: File,
+        activate: boolean,
+        params?: {
+            entrypoint?: string,
+            commands?: string,
+            onProgress: (progress: UploadProgress) => {}
+        }
+    ): Promise<Models.Deployment> {
+        const {entrypoint, commands, onProgress = () => {}} = params || {};
+
         if (typeof functionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
@@ -417,6 +518,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             onProgress
         );
     }
+
     /**
      * Get deployment
      *
@@ -449,6 +551,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             payload,
         );
     }
+
     /**
      * Update function deployment
      *
@@ -481,6 +584,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             payload,
         );
     }
+
     /**
      * Delete deployment
      *
@@ -513,6 +617,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             payload,
         );
     }
+
     /**
      * Create build
      *
@@ -549,6 +654,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             payload,
         );
     }
+
     /**
      * Download Deployment
      *
@@ -582,18 +688,22 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'arrayBuffer'
         );
     }
+
     /**
      * List executions
      *
      * Get a list of all the current user function execution logs. You can use the query params to filter your results.
      *
      * @param {string} functionId
-     * @param {string[]} queries
-     * @param {string} search
+     * @param {Object} params
+     * @param {string[]} params.queries
+     * @param {string} params.search
      * @throws {AppwriteException}
      * @returns {Promise<Models.ExecutionList>}
      */
-    async listExecutions(functionId: string, queries?: string[], search?: string): Promise<Models.ExecutionList> {
+    async listExecutions(functionId: string, params?: { queries?: string[], search?: string}): Promise<Models.ExecutionList> {
+        const { queries, search } = params || {}
+
         if (typeof functionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
@@ -618,21 +728,34 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             payload,
         );
     }
+
     /**
      * Create execution
      *
      * Trigger a function execution. The returned object will return you the current execution status. You can ping the `Get Execution` endpoint to get updates on the current execution status. Once this endpoint is called, your function execution process will start asynchronously.
      *
      * @param {string} functionId
-     * @param {string} body
-     * @param {boolean} async
-     * @param {string} xpath
-     * @param {ExecutionMethod} method
-     * @param {object} headers
+     * @param {Object} params
+     * @param {string} params.body
+     * @param {boolean} params.async
+     * @param {string} params.xpath
+     * @param {ExecutionMethod} params.method
+     * @param {object} params.headers
      * @throws {AppwriteException}
      * @returns {Promise<Models.Execution>}
      */
-    async createExecution(functionId: string, body?: string, async?: boolean, xpath?: string, method?: ExecutionMethod, headers?: object): Promise<Models.Execution> {
+    async createExecution(
+        functionId: string,
+        params?: {
+            body?: string,
+            async?: boolean, 
+            xpath?: string,
+            method?: ExecutionMethod,
+            headers?: object
+        }
+    ): Promise<Models.Execution> {
+        const { body, async, xpath, method, headers } = params || {};
+
         if (typeof functionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
@@ -666,6 +789,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             payload,
         );
     }
+
     /**
      * Get execution
      *
@@ -698,6 +822,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             payload,
         );
     }
+
     /**
      * List variables
      *
@@ -726,6 +851,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             payload,
         );
     }
+
     /**
      * Create variable
      *
@@ -768,6 +894,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             payload,
         );
     }
+
     /**
      * Get variable
      *
@@ -800,6 +927,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             payload,
         );
     }
+
     /**
      * Update variable
      *
@@ -843,6 +971,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             payload,
         );
     }
+
     /**
      * Delete variable
      *

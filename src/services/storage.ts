@@ -16,12 +16,17 @@ export class Storage {
      *
      * Get a list of all the storage buckets. You can use the query params to filter your results.
      *
-     * @param {string[]} queries
-     * @param {string} search
+     * @param {Object} params
+     * @param {string[]} params.queries
+     * @param {string} params.search
      * @throws {AppwriteException}
      * @returns {Promise<Models.BucketList>}
      */
-    async listBuckets(queries?: string[], search?: string): Promise<Models.BucketList> {
+    async listBuckets(
+        params?: { queries?: string[], search?: string }
+    ): Promise<Models.BucketList> {
+        const { queries, search } = params || {};
+
         const apiPath = '/storage/buckets';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -50,18 +55,33 @@ export class Storage {
      *
      * @param {string} bucketId
      * @param {string} name
-     * @param {string[]} permissions
-     * @param {boolean} fileSecurity
-     * @param {boolean} enabled
-     * @param {number} maximumFileSize
-     * @param {string[]} allowedFileExtensions
-     * @param {Compression} compression
-     * @param {boolean} encryption
-     * @param {boolean} antivirus
+     * @param {Object} params
+     * @param {string[]} params.permissions
+     * @param {boolean} params.fileSecurity
+     * @param {boolean} params.enabled
+     * @param {number} params.maximumFileSize
+     * @param {string[]} params.allowedFileExtensions
+     * @param {Compression} params.compression
+     * @param {boolean} params.encryption
+     * @param {boolean} params.antivirus
      * @throws {AppwriteException}
      * @returns {Promise<Models.Bucket>}
      */
-    async createBucket(bucketId: string, name: string, permissions?: string[], fileSecurity?: boolean, enabled?: boolean, maximumFileSize?: number, allowedFileExtensions?: string[], compression?: Compression, encryption?: boolean, antivirus?: boolean): Promise<Models.Bucket> {
+    async createBucket(
+        bucketId: string, name: string,
+        params?: {
+            permissions?: string[];
+            fileSecurity?: boolean;
+            enabled?: boolean;
+            maximumFileSize?: number;
+            allowedFileExtensions?: string[];
+            compression?: Compression;
+            encryption?: boolean;
+            antivirus?: boolean;
+        }
+    ): Promise<Models.Bucket> {
+        const { permissions, fileSecurity, enabled, maximumFileSize, allowedFileExtensions, compression, encryption, antivirus } = params || {};
+
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -141,6 +161,7 @@ export class Storage {
             payload,
         );
     }
+
     /**
      * Update bucket
      *
@@ -148,18 +169,33 @@ export class Storage {
      *
      * @param {string} bucketId
      * @param {string} name
-     * @param {string[]} permissions
-     * @param {boolean} fileSecurity
-     * @param {boolean} enabled
-     * @param {number} maximumFileSize
-     * @param {string[]} allowedFileExtensions
-     * @param {Compression} compression
-     * @param {boolean} encryption
-     * @param {boolean} antivirus
+     * @param {Object} params
+     * @param {string[]} params.permissions
+     * @param {boolean} params.fileSecurity
+     * @param {boolean} params.enabled
+     * @param {number} params.maximumFileSize
+     * @param {string[]} params.allowedFileExtensions
+     * @param {Compression} params.compression
+     * @param {boolean} params.encryption
+     * @param {boolean} params.antivirus
      * @throws {AppwriteException}
      * @returns {Promise<Models.Bucket>}
      */
-    async updateBucket(bucketId: string, name: string, permissions?: string[], fileSecurity?: boolean, enabled?: boolean, maximumFileSize?: number, allowedFileExtensions?: string[], compression?: Compression, encryption?: boolean, antivirus?: boolean): Promise<Models.Bucket> {
+    async updateBucket(
+        bucketId: string, name: string,
+        params?: {
+            permissions?: string[];
+            fileSecurity?: boolean;
+            enabled?: boolean;
+            maximumFileSize?: number;
+            allowedFileExtensions?: string[];
+            compression?: Compression;
+            encryption?: boolean;
+            antivirus?: boolean;
+        }
+    ): Promise<Models.Bucket> {
+        const { permissions, fileSecurity, enabled, maximumFileSize, allowedFileExtensions, compression, encryption, antivirus } = params || {};
+
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -236,18 +272,25 @@ export class Storage {
             payload,
         );
     }
+
     /**
      * List files
      *
      * Get a list of all the user files. You can use the query params to filter your results.
      *
      * @param {string} bucketId
-     * @param {string[]} queries
-     * @param {string} search
+     * @param {Object} params
+     * @param {string[]} params.queries
+     * @param {string} params.search
      * @throws {AppwriteException}
      * @returns {Promise<Models.FileList>}
      */
-    async listFiles(bucketId: string, queries?: string[], search?: string): Promise<Models.FileList> {
+    async listFiles(
+        bucketId: string,
+        params?: { queries?: string[], search?: string }
+    ): Promise<Models.FileList> {
+        const { queries, search } = params || {}
+
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -272,6 +315,7 @@ export class Storage {
             payload,
         );
     }
+
     /**
      * Create file
      *
@@ -287,11 +331,17 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
      * @param {string} bucketId
      * @param {string} fileId
      * @param {File} file
-     * @param {string[]} permissions
+     * @param {Object} params
+     * @param {string[]} params.permissions
      * @throws {AppwriteException}
      * @returns {Promise<Models.File>}
      */
-    async createFile(bucketId: string, fileId: string, file: File, permissions?: string[], onProgress = (progress: UploadProgress) => {}): Promise<Models.File> {
+    async createFile(
+        bucketId: string, fileId: string, file: File,
+        params?: { permissions?: string[], onProgress: (progress: UploadProgress) => {} }
+    ): Promise<Models.File> {
+        const { permissions, onProgress = () => {} } = params || {}
+
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -326,6 +376,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
             onProgress
         );
     }
+
     /**
      * Get file
      *
@@ -358,6 +409,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
             payload,
         );
     }
+
     /**
      * Update file
      *
@@ -365,12 +417,18 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
      *
      * @param {string} bucketId
      * @param {string} fileId
-     * @param {string} name
-     * @param {string[]} permissions
+     * @param {Object} params
+     * @param {string} params.name
+     * @param {string[]} params.permissions
      * @throws {AppwriteException}
      * @returns {Promise<Models.File>}
      */
-    async updateFile(bucketId: string, fileId: string, name?: string, permissions?: string[]): Promise<Models.File> {
+    async updateFile(
+        bucketId: string, fileId: string,
+        params?: { name?: string, permissions?: string[] }
+    ): Promise<Models.File> {
+        const { name, permissions } = params || {}
+
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -398,6 +456,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
             payload,
         );
     }
+
     /**
      * Delete File
      *
@@ -430,6 +489,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
             payload,
         );
     }
+
     /**
      * Get file for download
      *
@@ -463,6 +523,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
             'arrayBuffer'
         );
     }
+
     /**
      * Get file preview
      *
@@ -484,7 +545,24 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
      * @throws {AppwriteException}
      * @returns {Promise<ArrayBuffer>}
      */
-    async getFilePreview(bucketId: string, fileId: string, width?: number, height?: number, gravity?: ImageGravity, quality?: number, borderWidth?: number, borderColor?: string, borderRadius?: number, opacity?: number, rotation?: number, background?: string, output?: ImageFormat): Promise<ArrayBuffer> {
+    async getFilePreview(
+        bucketId: string, fileId: string,
+        params?: {
+            width?: number,
+            height?: number,
+            gravity?: ImageGravity,
+            quality?: number,
+            borderWidth?: number,
+            borderColor?: string,
+            borderRadius?: number,
+            opacity?: number,
+            rotation?: number,
+            background?: string,
+            output?: ImageFormat
+        }
+    ): Promise<ArrayBuffer> {
+        const { width, height, gravity, quality, borderWidth, borderColor, borderRadius, opacity, rotation, background, output } = params || {}
+
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -540,6 +618,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
             'arrayBuffer'
         );
     }
+
     /**
      * Get file for view
      *

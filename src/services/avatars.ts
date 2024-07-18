@@ -19,13 +19,23 @@ export class Avatars {
 When one dimension is specified and the other is 0, the image is scaled with preserved aspect ratio. If both dimensions are 0, the API provides an image at source quality. If dimensions are not specified, the default size of image returned is 100x100px.
      *
      * @param {Browser} code
-     * @param {number} width
-     * @param {number} height
-     * @param {number} quality
+     * @param {Object} params
+     * @param {number} params.width
+     * @param {number} params.height
+     * @param {number} params.quality
      * @throws {AppwriteException}
      * @returns {Promise<ArrayBuffer>}
      */
-    async getBrowser(code: Browser, width?: number, height?: number, quality?: number): Promise<ArrayBuffer> {
+    async getBrowser(
+        code: Browser,
+        params?: {
+            width?: number;
+            height?: number;
+            quality?: number;
+        },
+    ): Promise<ArrayBuffer> {
+        const { width, height, quality } = params || {};
+
         if (typeof code === 'undefined') {
             throw new AppwriteException('Missing required parameter: "code"');
         }
@@ -54,6 +64,7 @@ When one dimension is specified and the other is 0, the image is scaled with pre
             'arrayBuffer'
         );
     }
+
     /**
      * Get credit card icon
      *
@@ -63,13 +74,23 @@ When one dimension is specified and the other is 0, the image is scaled with pre
 
      *
      * @param {CreditCard} code
-     * @param {number} width
-     * @param {number} height
-     * @param {number} quality
+     * @param {Object} params
+     * @param {number} params.width
+     * @param {number} params.height
+     * @param {number} params.quality
      * @throws {AppwriteException}
      * @returns {Promise<ArrayBuffer>}
      */
-    async getCreditCard(code: CreditCard, width?: number, height?: number, quality?: number): Promise<ArrayBuffer> {
+    async getCreditCard(
+        code: CreditCard,
+        params?: {
+            width?: number;
+            height?: number;
+            quality?: number;
+        },
+    ): Promise<ArrayBuffer> {
+        const { width, height, quality } = params || {};
+
         if (typeof code === 'undefined') {
             throw new AppwriteException('Missing required parameter: "code"');
         }
@@ -131,6 +152,7 @@ When one dimension is specified and the other is 0, the image is scaled with pre
             'arrayBuffer'
         );
     }
+
     /**
      * Get country flag
      *
@@ -140,13 +162,23 @@ When one dimension is specified and the other is 0, the image is scaled with pre
 
      *
      * @param {Flag} code
-     * @param {number} width
-     * @param {number} height
-     * @param {number} quality
+     * @param {Object} params
+     * @param {number} params.width
+     * @param {number} params.height
+     * @param {number} params.quality
      * @throws {AppwriteException}
      * @returns {Promise<ArrayBuffer>}
      */
-    async getFlag(code: Flag, width?: number, height?: number, quality?: number): Promise<ArrayBuffer> {
+    async getFlag(
+        code: Flag,
+        params?: {
+            width?: number;
+            height?: number;
+            quality?: number;
+        },
+    ): Promise<ArrayBuffer> {
+        const { width, height, quality } = params || {};
+
         if (typeof code === 'undefined') {
             throw new AppwriteException('Missing required parameter: "code"');
         }
@@ -175,6 +207,7 @@ When one dimension is specified and the other is 0, the image is scaled with pre
             'arrayBuffer'
         );
     }
+
     /**
      * Get image from URL
      *
@@ -184,12 +217,21 @@ When one dimension is specified and the other is 0, the image is scaled with pre
 
      *
      * @param {string} url
-     * @param {number} width
-     * @param {number} height
+     * @param {Object} params
+     * @param {number} params.width
+     * @param {number} params.height
      * @throws {AppwriteException}
      * @returns {Promise<ArrayBuffer>}
      */
-    async getImage(url: string, width?: number, height?: number): Promise<ArrayBuffer> {
+    async getImage(
+        url: string,
+        params?: {
+            width?: number;
+            height?: number;
+        },
+    ): Promise<ArrayBuffer> {
+        const { width, height } = params || {};
+
         if (typeof url === 'undefined') {
             throw new AppwriteException('Missing required parameter: "url"');
         }
@@ -218,6 +260,7 @@ When one dimension is specified and the other is 0, the image is scaled with pre
             'arrayBuffer'
         );
     }
+
     /**
      * Get user initials
      *
@@ -228,14 +271,23 @@ You can use the color and background params to change the avatar colors. By defa
 When one dimension is specified and the other is 0, the image is scaled with preserved aspect ratio. If both dimensions are 0, the API provides an image at source quality. If dimensions are not specified, the default size of image returned is 100x100px.
 
      *
-     * @param {string} name
-     * @param {number} width
-     * @param {number} height
-     * @param {string} background
+     * @param {string} params.name
+     * @param {number} params.width
+     * @param {number} params.height
+     * @param {string} params.background
      * @throws {AppwriteException}
      * @returns {Promise<ArrayBuffer>}
      */
-    async getInitials(name?: string, width?: number, height?: number, background?: string): Promise<ArrayBuffer> {
+    async getInitials(
+        params?: {
+            name?: string;
+            width?: number;
+            height?: number;
+            background?: string;
+        }
+    ): Promise<ArrayBuffer> {
+        const { name, width, height, background } = params || {};
+
         const apiPath = '/avatars/initials';
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -264,6 +316,7 @@ When one dimension is specified and the other is 0, the image is scaled with pre
             'arrayBuffer'
         );
     }
+
     /**
      * Get QR code
      *
@@ -271,13 +324,23 @@ When one dimension is specified and the other is 0, the image is scaled with pre
 
      *
      * @param {string} text
-     * @param {number} size
-     * @param {number} margin
-     * @param {boolean} download
+     * @param {Object} params
+     * @param {number} params.size
+     * @param {number} params.margin
+     * @param {boolean} params.download
      * @throws {AppwriteException}
      * @returns {Promise<ArrayBuffer>}
      */
-    async getQR(text: string, size?: number, margin?: number, download?: boolean): Promise<ArrayBuffer> {
+    async getQR(
+        text: string,
+        params?: {
+            size?: number;
+            margin?: number;
+            download?: boolean;
+        },
+    ): Promise<ArrayBuffer> {
+        const { size, margin, download } = params || {};
+
         if (typeof text === 'undefined') {
             throw new AppwriteException('Missing required parameter: "text"');
         }

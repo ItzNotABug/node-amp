@@ -16,12 +16,18 @@ export class Databases {
      *
      * Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
      *
-     * @param {string[]} queries
-     * @param {string} search
+     * @param {string[]} params.queries
+     * @param {string} params.search
      * @throws {AppwriteException}
      * @returns {Promise<Models.DatabaseList>}
      */
-    async list(queries?: string[], search?: string): Promise<Models.DatabaseList> {
+    async list(params?: {
+        queries?: string[],
+        search?: string
+    }
+    ): Promise<Models.DatabaseList> {
+        const {queries, search} = params || {};
+
         const apiPath = '/databases';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -187,12 +193,16 @@ export class Databases {
      * Get a list of all collections that belong to the provided databaseId. You can use the search parameter to filter your results.
      *
      * @param {string} databaseId
-     * @param {string[]} queries
-     * @param {string} search
+     * @param {Object} params
+     * @param {string[]} params.queries
+     * @param {string} params.search
      * @throws {AppwriteException}
      * @returns {Promise<Models.CollectionList>}
      */
-    async listCollections(databaseId: string, queries?: string[], search?: string): Promise<Models.CollectionList> {
+    async listCollections(databaseId: string, params?: {queries?: string[], search?: string
+}): Promise<Models.CollectionList> {
+        const {queries, search} = params || {};
+
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -225,13 +235,16 @@ export class Databases {
      * @param {string} databaseId
      * @param {string} collectionId
      * @param {string} name
-     * @param {string[]} permissions
-     * @param {boolean} documentSecurity
-     * @param {boolean} enabled
+     * @param {Object} params
+     * @param {string[]} params.permissions
+     * @param {boolean} params.documentSecurity
+     * @param {boolean} params.enabled
      * @throws {AppwriteException}
      * @returns {Promise<Models.Collection>}
      */
-    async createCollection(databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean): Promise<Models.Collection> {
+    async createCollection(databaseId: string, collectionId: string, name: string, params?: { permissions?: string[], documentSecurity?: boolean, enabled?: boolean }): Promise<Models.Collection> {
+        const {permissions, documentSecurity, enabled} = params || {};
+
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -311,13 +324,17 @@ export class Databases {
      * @param {string} databaseId
      * @param {string} collectionId
      * @param {string} name
-     * @param {string[]} permissions
-     * @param {boolean} documentSecurity
-     * @param {boolean} enabled
+     * @param {Object} params
+     * @param {string[]} params.permissions
+     * @param {boolean} params.documentSecurity
+     * @param {boolean} params.enabled
      * @throws {AppwriteException}
      * @returns {Promise<Models.Collection>}
      */
-    async updateCollection(databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean): Promise<Models.Collection> {
+    async updateCollection(databaseId: string, collectionId: string, name: string, params?: {permissions?: string[], documentSecurity?: boolean, enabled?: boolean
+}): Promise<Models.Collection> {
+        const {permissions, documentSecurity, enabled} = params || {};
+
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -432,12 +449,15 @@ export class Databases {
      * @param {string} collectionId
      * @param {string} key
      * @param {boolean} required
-     * @param {boolean} xdefault
-     * @param {boolean} array
+     * @param {Object} params
+     * @param {boolean} params.xdefault
+     * @param {boolean} params.array
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeBoolean>}
      */
-    async createBooleanAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: boolean, array?: boolean): Promise<Models.AttributeBoolean> {
+    async createBooleanAttribute(databaseId: string, collectionId: string, key: string, required: boolean, params?: { xdefault?: boolean, array?: boolean }): Promise<Models.AttributeBoolean> {
+        const {xdefault, array} = params || {};
+
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -536,12 +556,15 @@ export class Databases {
      * @param {string} collectionId
      * @param {string} key
      * @param {boolean} required
-     * @param {string} xdefault
-     * @param {boolean} array
+     * @param {Object} params
+     * @param {string} params.xdefault
+     * @param {boolean} params.array
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeDatetime>}
      */
-    async createDatetimeAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean): Promise<Models.AttributeDatetime> {
+    async createDatetimeAttribute(databaseId: string, collectionId: string, key: string, required: boolean, params?: { xdefault?: string, array?: boolean }): Promise<Models.AttributeDatetime> {
+        const {xdefault, array} = params || {};
+
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -641,12 +664,15 @@ export class Databases {
      * @param {string} collectionId
      * @param {string} key
      * @param {boolean} required
-     * @param {string} xdefault
-     * @param {boolean} array
+     * @param {Object} params
+     * @param {string} params.xdefault
+     * @param {boolean} params.array
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeEmail>}
      */
-    async createEmailAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean): Promise<Models.AttributeEmail> {
+    async createEmailAttribute(databaseId: string, collectionId: string, key: string, required: boolean, params?: { xdefault?: string, array?: boolean }): Promise<Models.AttributeEmail> {
+        const {xdefault, array} = params || {};
+
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -748,12 +774,16 @@ export class Databases {
      * @param {string} key
      * @param {string[]} elements
      * @param {boolean} required
-     * @param {string} xdefault
-     * @param {boolean} array
+     * @param {Object} params
+     * @param {string} params.xdefault
+     * @param {boolean} params.array
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeEnum>}
      */
-    async createEnumAttribute(databaseId: string, collectionId: string, key: string, elements: string[], required: boolean, xdefault?: string, array?: boolean): Promise<Models.AttributeEnum> {
+    async createEnumAttribute(databaseId: string, collectionId: string, key: string, elements: string[], required: boolean, params?: { xdefault?: string, array?: boolean
+}): Promise<Models.AttributeEnum> {
+        const {xdefault, array} = params || {};
+
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -867,14 +897,17 @@ export class Databases {
      * @param {string} collectionId
      * @param {string} key
      * @param {boolean} required
-     * @param {number} min
-     * @param {number} max
-     * @param {number} xdefault
-     * @param {boolean} array
+     * @param {Object} params
+     * @param {number} params.min
+     * @param {number} params.max
+     * @param {number} params.xdefault
+     * @param {boolean} params.array
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeFloat>}
      */
-    async createFloatAttribute(databaseId: string, collectionId: string, key: string, required: boolean, min?: number, max?: number, xdefault?: number, array?: boolean): Promise<Models.AttributeFloat> {
+    async createFloatAttribute(databaseId: string, collectionId: string, key: string, required: boolean, params?: { min?: number, max?: number, xdefault?: number, array?: boolean }): Promise<Models.AttributeFloat> {
+        const { min, max, xdefault, array } = params || {};
+
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -995,14 +1028,17 @@ export class Databases {
      * @param {string} collectionId
      * @param {string} key
      * @param {boolean} required
-     * @param {number} min
-     * @param {number} max
-     * @param {number} xdefault
-     * @param {boolean} array
+     * @param {Object} params
+     * @param {number} params.min
+     * @param {number} params.max
+     * @param {number} params.xdefault
+     * @param {boolean} params.array
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeInteger>}
      */
-    async createIntegerAttribute(databaseId: string, collectionId: string, key: string, required: boolean, min?: number, max?: number, xdefault?: number, array?: boolean): Promise<Models.AttributeInteger> {
+    async createIntegerAttribute(databaseId: string, collectionId: string, key: string, required: boolean, params?: { min?: number, max?: number, xdefault?: number, array?: boolean }): Promise<Models.AttributeInteger> {
+        const {min, max, xdefault, array} = params || {};
+
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1123,12 +1159,15 @@ export class Databases {
      * @param {string} collectionId
      * @param {string} key
      * @param {boolean} required
-     * @param {string} xdefault
-     * @param {boolean} array
+     * @param {Object} params
+     * @param {string} params.xdefault
+     * @param {boolean} params.array
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeIp>}
      */
-    async createIpAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean): Promise<Models.AttributeIp> {
+    async createIpAttribute(databaseId: string, collectionId: string, key: string, required: boolean, params?: { xdefault?: string, array?: boolean }): Promise<Models.AttributeIp> {
+        const {xdefault, array} = params || {};
+
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1293,13 +1332,16 @@ export class Databases {
      * @param {string} key
      * @param {number} size
      * @param {boolean} required
-     * @param {string} xdefault
-     * @param {boolean} array
-     * @param {boolean} encrypt
+     * @param {Object} params
+     * @param {string} params.xdefault
+     * @param {boolean} params.array
+     * @param {boolean} params.encrypt
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeString>}
      */
-    async createStringAttribute(databaseId: string, collectionId: string, key: string, size: number, required: boolean, xdefault?: string, array?: boolean, encrypt?: boolean): Promise<Models.AttributeString> {
+    async createStringAttribute(databaseId: string, collectionId: string, key: string, size: number, required: boolean, params?: { xdefault?: string, array?: boolean, encrypt?: boolean }): Promise<Models.AttributeString> {
+        const {xdefault, array, encrypt} = params || {}
+
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1409,12 +1451,15 @@ export class Databases {
      * @param {string} collectionId
      * @param {string} key
      * @param {boolean} required
-     * @param {string} xdefault
-     * @param {boolean} array
+     * @param {Object} params
+     * @param {string} params.xdefault
+     * @param {boolean} params.array
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeUrl>}
      */
-    async createUrlAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean): Promise<Models.AttributeUrl> {
+    async createUrlAttribute(databaseId: string, collectionId: string, key: string, required: boolean, params?: { xdefault?: string, array?: boolean }): Promise<Models.AttributeUrl> {
+        const {xdefault, array} = params || {}
+
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1752,12 +1797,15 @@ export class Databases {
      * @param {string} databaseId
      * @param {string} collectionId
      * @param {string} documentId
-     * @param {Partial<Omit<Document, keyof Models.Document>>} data
-     * @param {string[]} permissions
+     * @param {Object} params
+     * @param {Partial<Omit<Document, keyof Models.Document>>} params.data
+     * @param {string[]} params.permissions
      * @throws {AppwriteException}
      * @returns {Promise<Document>}
      */
-    async updateDocument<Document extends Models.Document>(databaseId: string, collectionId: string, documentId: string, data?: Partial<Omit<Document, keyof Models.Document>>, permissions?: string[]): Promise<Document> {
+    async updateDocument<Document extends Models.Document>(databaseId: string, collectionId: string, documentId: string, params?: { data?: Partial<Omit<Document, keyof Models.Document>>, permissions?: string[] }): Promise<Document> {
+        const {data, permissions} = params || {}
+
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }

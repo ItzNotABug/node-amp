@@ -13,12 +13,20 @@ export class Teams {
      *
      * Get a list of all the teams in which the current user is a member. You can use the parameters to filter your results.
      *
-     * @param {string[]} queries
-     * @param {string} search
+     * @param {Object} params
+     * @param {string[]} params.queries
+     * @param {string} params.search
      * @throws {AppwriteException}
      * @returns {Promise<Models.TeamList<Preferences>>}
      */
-    async list<Preferences extends Models.Preferences>(queries?: string[], search?: string): Promise<Models.TeamList<Preferences>> {
+    async list<Preferences extends Models.Preferences>(
+        params?: {
+            queries?: string[],
+            search?: string
+        }
+    ): Promise<Models.TeamList<Preferences>> {
+        const { queries, search } = params || {};
+
         const apiPath = '/teams';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -40,6 +48,7 @@ export class Teams {
             payload,
         );
     }
+
     /**
      * Create team
      *
@@ -82,6 +91,7 @@ export class Teams {
             payload,
         );
     }
+
     /**
      * Get team
      *
@@ -110,6 +120,7 @@ export class Teams {
             payload,
         );
     }
+
     /**
      * Update name
      *
@@ -145,6 +156,7 @@ export class Teams {
             payload,
         );
     }
+
     /**
      * Delete team
      *
@@ -173,18 +185,25 @@ export class Teams {
             payload,
         );
     }
+
     /**
      * List team memberships
      *
      * Use this endpoint to list a team&#039;s members using the team&#039;s ID. All team members have read access to this endpoint.
      *
      * @param {string} teamId
-     * @param {string[]} queries
-     * @param {string} search
+     * @param {Object} params
+     * @param {string[]} params.queries
+     * @param {string} params.search
      * @throws {AppwriteException}
      * @returns {Promise<Models.MembershipList>}
      */
-    async listMemberships(teamId: string, queries?: string[], search?: string): Promise<Models.MembershipList> {
+    async listMemberships(
+        teamId: string,
+        params?: { queries?: string[], search?: string }
+    ): Promise<Models.MembershipList> {
+        const { queries, search } = params || {}
+
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
@@ -209,6 +228,7 @@ export class Teams {
             payload,
         );
     }
+
     /**
      * Create team membership
      *
@@ -223,15 +243,27 @@ Please note that to avoid a [Redirect Attack](https://github.com/OWASP/CheatShee
      *
      * @param {string} teamId
      * @param {string[]} roles
-     * @param {string} email
-     * @param {string} userId
-     * @param {string} phone
-     * @param {string} url
-     * @param {string} name
+     * @param {Object} params
+     * @param {string} params.email
+     * @param {string} params.userId
+     * @param {string} params.phone
+     * @param {string} params.url
+     * @param {string} params.name
      * @throws {AppwriteException}
      * @returns {Promise<Models.Membership>}
      */
-    async createMembership(teamId: string, roles: string[], email?: string, userId?: string, phone?: string, url?: string, name?: string): Promise<Models.Membership> {
+    async createMembership(
+        teamId: string, roles: string[],
+        params?: {
+            email?: string,
+            userId?: string,
+            phone?: string,
+            url?: string,
+            name?: string
+        }
+    ): Promise<Models.Membership> {
+        const { email, userId, phone, url, name } = params || {}
+
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
@@ -271,6 +303,7 @@ Please note that to avoid a [Redirect Attack](https://github.com/OWASP/CheatShee
             payload,
         );
     }
+
     /**
      * Get team membership
      *
@@ -303,6 +336,7 @@ Please note that to avoid a [Redirect Attack](https://github.com/OWASP/CheatShee
             payload,
         );
     }
+
     /**
      * Update membership
      *
@@ -343,6 +377,7 @@ Please note that to avoid a [Redirect Attack](https://github.com/OWASP/CheatShee
             payload,
         );
     }
+
     /**
      * Delete team membership
      *
@@ -375,6 +410,7 @@ Please note that to avoid a [Redirect Attack](https://github.com/OWASP/CheatShee
             payload,
         );
     }
+
     /**
      * Update team membership status
      *
@@ -424,6 +460,7 @@ If the request is successful, a session for the user is automatically created.
             payload,
         );
     }
+
     /**
      * Get team preferences
      *
@@ -452,6 +489,7 @@ If the request is successful, a session for the user is automatically created.
             payload,
         );
     }
+
     /**
      * Update preferences
      *

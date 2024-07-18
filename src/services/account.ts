@@ -1158,12 +1158,18 @@ A user is limited to 10 active sessions at a time by default. [Learn more about 
      *
      * @param {string} userId
      * @param {string} email
-     * @param {string} url
-     * @param {boolean} phrase
+     * @param {Object} params
+     * @param {string} params.url
+     * @param {boolean} params.phrase
      * @throws {AppwriteException}
      * @returns {Promise<Models.Token>}
      */
-    async createMagicURLToken(userId: string, email: string, url?: string, phrase?: boolean): Promise<Models.Token> {
+    async createMagicURLToken(userId: string, email: string, params?: {
+        url?: string;
+        phrase?: boolean;
+    }): Promise<Models.Token> {
+        const { url, phrase } = params || {};
+
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1207,13 +1213,23 @@ If authentication succeeds, `userId` and `secret` of a token will be appended to
 A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
      *
      * @param {OAuthProvider} provider
-     * @param {string} success
-     * @param {string} failure
-     * @param {string[]} scopes
+     * @param {Object} params
+     * @param {string} params.success
+     * @param {string} params.failure
+     * @param {string[]} params.scopes
      * @throws {AppwriteException}
      * @returns {Promise<string>}
      */
-    async createOAuth2Token(provider: OAuthProvider, success?: string, failure?: string, scopes?: string[]): Promise<string> {
+    async createOAuth2Token(
+        provider: OAuthProvider,
+        params?: {
+            success?: string;
+            failure?: string;
+            scopes?: string[];
+        },
+    ): Promise<string> {
+        const { success, failure, scopes } = params || {};
+
         if (typeof provider === 'undefined') {
             throw new AppwriteException('Missing required parameter: "provider"');
         }

@@ -16,12 +16,20 @@ export class Users {
      *
      * Get a list of all the project&#039;s users. You can use the query params to filter your results.
      *
-     * @param {string[]} queries
-     * @param {string} search
+     * @param {Object} params
+     * @param {string[]} params.queries
+     * @param {string} params.search
      * @throws {AppwriteException}
      * @returns {Promise<Models.UserList<Preferences>>}
      */
-    async list<Preferences extends Models.Preferences>(queries?: string[], search?: string): Promise<Models.UserList<Preferences>> {
+    async list<Preferences extends Models.Preferences>(
+        params?: {
+            queries?: string[],
+            search?: string
+        }
+    ): Promise<Models.UserList<Preferences>> {
+        const { queries, search } = params || {}
+
         const apiPath = '/users';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -43,20 +51,32 @@ export class Users {
             payload,
         );
     }
+
     /**
      * Create user
      *
      * Create a new user.
      *
      * @param {string} userId
-     * @param {string} email
-     * @param {string} phone
-     * @param {string} password
-     * @param {string} name
+     * @param {Object} params
+     * @param {string} params.email
+     * @param {string} params.phone
+     * @param {string} params.password
+     * @param {string} params.name
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async create<Preferences extends Models.Preferences>(userId: string, email?: string, phone?: string, password?: string, name?: string): Promise<Models.User<Preferences>> {
+    async create<Preferences extends Models.Preferences>(
+        userId: string,
+        params?: {
+            email?: string,
+            phone?: string,
+            password?: string,
+            name?: string
+        }
+    ): Promise<Models.User<Preferences>> {
+        const { email, phone, password, name } = params || {}
+
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -90,6 +110,7 @@ export class Users {
             payload,
         );
     }
+
     /**
      * Create user with Argon2 password
      *
@@ -139,6 +160,7 @@ export class Users {
             payload,
         );
     }
+
     /**
      * Create user with bcrypt password
      *
@@ -188,17 +210,26 @@ export class Users {
             payload,
         );
     }
+
     /**
      * List Identities
      *
      * Get identities for all users.
      *
-     * @param {string[]} queries
-     * @param {string} search
+     * @param {Object} params
+     * @param {string[]} params.queries
+     * @param {string} params.search
      * @throws {AppwriteException}
      * @returns {Promise<Models.IdentityList>}
      */
-    async listIdentities(queries?: string[], search?: string): Promise<Models.IdentityList> {
+    async listIdentities(
+        params?: {
+            queries?: string[],
+            search?: string
+        }
+    ): Promise<Models.IdentityList> {
+        const { queries, search } = params || {}
+
         const apiPath = '/users/identities';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -220,6 +251,7 @@ export class Users {
             payload,
         );
     }
+
     /**
      * Delete identity
      *
@@ -248,6 +280,7 @@ export class Users {
             payload,
         );
     }
+
     /**
      * Create user with MD5 password
      *
@@ -297,6 +330,7 @@ export class Users {
             payload,
         );
     }
+
     /**
      * Create user with PHPass password
      *
@@ -346,6 +380,7 @@ export class Users {
             payload,
         );
     }
+
     /**
      * Create user with Scrypt password
      *
@@ -430,6 +465,7 @@ export class Users {
             payload,
         );
     }
+
     /**
      * Create user with Scrypt modified password
      *
@@ -500,6 +536,7 @@ export class Users {
             payload,
         );
     }
+
     /**
      * Create user with SHA password
      *
@@ -508,12 +545,21 @@ export class Users {
      * @param {string} userId
      * @param {string} email
      * @param {string} password
-     * @param {PasswordHash} passwordVersion
-     * @param {string} name
+     * @param {Object} params
+     * @param {PasswordHash} params.passwordVersion
+     * @param {string} params.name
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async createSHAUser<Preferences extends Models.Preferences>(userId: string, email: string, password: string, passwordVersion?: PasswordHash, name?: string): Promise<Models.User<Preferences>> {
+    async createSHAUser<Preferences extends Models.Preferences>(
+        userId: string, email: string, password: string,
+        params?: {
+            passwordVersion?: PasswordHash,
+            name?: string
+        }
+    ): Promise<Models.User<Preferences>> {
+        const  { passwordVersion, name } = params || {}
+
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -553,6 +599,7 @@ export class Users {
             payload,
         );
     }
+
     /**
      * Get user
      *
@@ -581,6 +628,7 @@ export class Users {
             payload,
         );
     }
+
     /**
      * Delete user
      *
@@ -609,6 +657,7 @@ export class Users {
             payload,
         );
     }
+
     /**
      * Update email
      *
@@ -644,6 +693,7 @@ export class Users {
             payload,
         );
     }
+
     /**
      * Update user labels
      *
@@ -681,6 +731,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             payload,
         );
     }
+
     /**
      * List user logs
      *
@@ -713,6 +764,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             payload,
         );
     }
+
     /**
      * List user memberships
      *
@@ -741,6 +793,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             payload,
         );
     }
+
     /**
      * Update MFA
      *
@@ -776,6 +829,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             payload,
         );
     }
+
     /**
      * Delete Authenticator
      *
@@ -808,6 +862,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             payload,
         );
     }
+
     /**
      * List Factors
      *
@@ -836,6 +891,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             payload,
         );
     }
+
     /**
      * Get MFA Recovery Codes
      *
@@ -864,6 +920,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             payload,
         );
     }
+
     /**
      * Regenerate MFA Recovery Codes
      *
@@ -892,6 +949,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             payload,
         );
     }
+
     /**
      * Create MFA Recovery Codes
      *
@@ -920,6 +978,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             payload,
         );
     }
+
     /**
      * Update name
      *
@@ -955,6 +1014,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             payload,
         );
     }
+
     /**
      * Update password
      *
@@ -990,6 +1050,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             payload,
         );
     }
+
     /**
      * Update phone
      *
@@ -1025,6 +1086,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             payload,
         );
     }
+
     /**
      * Get user preferences
      *
@@ -1053,6 +1115,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             payload,
         );
     }
+
     /**
      * Update user preferences
      *
@@ -1088,6 +1151,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             payload,
         );
     }
+
     /**
      * List user sessions
      *
@@ -1116,6 +1180,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             payload,
         );
     }
+
     /**
      * Create session
      *
@@ -1146,6 +1211,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             payload,
         );
     }
+
     /**
      * Delete user sessions
      *
@@ -1174,6 +1240,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             payload,
         );
     }
+
     /**
      * Delete user session
      *
@@ -1206,6 +1273,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             payload,
         );
     }
+
     /**
      * Update user status
      *
@@ -1241,6 +1309,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             payload,
         );
     }
+
     /**
      * List User Targets
      *
@@ -1273,6 +1342,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             payload,
         );
     }
+
     /**
      * Create User Target
      *
@@ -1282,12 +1352,21 @@ If you want to generate a token for a custom authentication flow, use the [POST 
      * @param {string} targetId
      * @param {MessagingProviderType} providerType
      * @param {string} identifier
-     * @param {string} providerId
-     * @param {string} name
+     * @param {Object} params
+     * @param {string} params.providerId
+     * @param {string} params.name
      * @throws {AppwriteException}
      * @returns {Promise<Models.Target>}
      */
-    async createTarget(userId: string, targetId: string, providerType: MessagingProviderType, identifier: string, providerId?: string, name?: string): Promise<Models.Target> {
+    async createTarget(
+        userId: string, targetId: string, providerType: MessagingProviderType, identifier: string,
+        params?: {
+            providerId?: string,
+            name?: string
+        }
+    ): Promise<Models.Target> {
+        const { providerId, name } = params || {}
+
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1330,6 +1409,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             payload,
         );
     }
+
     /**
      * Get User Target
      *
@@ -1362,6 +1442,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             payload,
         );
     }
+
     /**
      * Update User target
      *
@@ -1406,6 +1487,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             payload,
         );
     }
+
     /**
      * Delete user target
      *
@@ -1438,6 +1520,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             payload,
         );
     }
+
     /**
      * Create token
      *
@@ -1445,12 +1528,21 @@ If you want to generate a token for a custom authentication flow, use the [POST 
 
      *
      * @param {string} userId
-     * @param {number} length
-     * @param {number} expire
+     * @param {Object} params
+     * @param {number} params.length
+     * @param {number} params.expire
      * @throws {AppwriteException}
      * @returns {Promise<Models.Token>}
      */
-    async createToken(userId: string, length?: number, expire?: number): Promise<Models.Token> {
+    async createToken(
+        userId: string,
+        params?: {
+            length?: number,
+            expire?: number
+        }
+    ): Promise<Models.Token> {
+        const { length, expire } = params || {}
+
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1475,6 +1567,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             payload,
         );
     }
+
     /**
      * Update email verification
      *
@@ -1510,6 +1603,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             payload,
         );
     }
+
     /**
      * Update phone verification
      *

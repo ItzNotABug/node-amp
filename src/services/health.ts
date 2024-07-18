@@ -242,12 +242,15 @@ export class Health {
      *
      * Get the number of database changes that are waiting to be processed in the Appwrite internal queue server.
      *
-     * @param {string} name
-     * @param {number} threshold
+     * @param {Object} params
+     * @param {string} params.name
+     * @param {number} params.threshold
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    async getQueueDatabases(name?: string, threshold?: number): Promise<Models.HealthQueue> {
+    async getQueueDatabases(params?: {name?: string, threshold?: number }): Promise<Models.HealthQueue> {
+        const { name, threshold } = params || {};
+
         const apiPath = '/health/queue/databases';
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
