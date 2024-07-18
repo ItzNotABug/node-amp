@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    UploadProgress,
+} from '../client';
 import type { Models } from '../models';
 import { PasswordHash } from '../enums/password-hash';
 import { AuthenticatorType } from '../enums/authenticator-type';
@@ -22,13 +27,11 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.UserList<Preferences>>}
      */
-    async list<Preferences extends Models.Preferences>(
-        params?: {
-            queries?: string[],
-            search?: string
-        }
-    ): Promise<Models.UserList<Preferences>> {
-        const { queries, search } = params || {}
+    async list<Preferences extends Models.Preferences>(params?: {
+        queries?: string[];
+        search?: string;
+    }): Promise<Models.UserList<Preferences>> {
+        const { queries, search } = params || {};
 
         const apiPath = '/users';
         const payload: Payload = {};
@@ -42,14 +45,9 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -69,13 +67,13 @@ export class Users {
     async create<Preferences extends Models.Preferences>(
         userId: string,
         params?: {
-            email?: string,
-            phone?: string,
-            password?: string,
-            name?: string
-        }
+            email?: string;
+            phone?: string;
+            password?: string;
+            name?: string;
+        },
     ): Promise<Models.User<Preferences>> {
-        const { email, phone, password, name } = params || {}
+        const { email, phone, password, name } = params || {};
 
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
@@ -101,14 +99,9 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -123,7 +116,12 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async createArgon2User<Preferences extends Models.Preferences>(userId: string, email: string, password: string, name?: string): Promise<Models.User<Preferences>> {
+    async createArgon2User<Preferences extends Models.Preferences>(
+        userId: string,
+        email: string,
+        password: string,
+        name?: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -131,7 +129,9 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "email"');
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
         const apiPath = '/users/argon2';
         const payload: Payload = {};
@@ -151,14 +151,9 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -173,7 +168,12 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async createBcryptUser<Preferences extends Models.Preferences>(userId: string, email: string, password: string, name?: string): Promise<Models.User<Preferences>> {
+    async createBcryptUser<Preferences extends Models.Preferences>(
+        userId: string,
+        email: string,
+        password: string,
+        name?: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -181,7 +181,9 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "email"');
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
         const apiPath = '/users/bcrypt';
         const payload: Payload = {};
@@ -201,14 +203,9 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -222,13 +219,11 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.IdentityList>}
      */
-    async listIdentities(
-        params?: {
-            queries?: string[],
-            search?: string
-        }
-    ): Promise<Models.IdentityList> {
-        const { queries, search } = params || {}
+    async listIdentities(params?: {
+        queries?: string[];
+        search?: string;
+    }): Promise<Models.IdentityList> {
+        const { queries, search } = params || {};
 
         const apiPath = '/users/identities';
         const payload: Payload = {};
@@ -242,14 +237,9 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -263,22 +253,22 @@ export class Users {
      */
     async deleteIdentity(identityId: string): Promise<{}> {
         if (typeof identityId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "identityId"');
+            throw new AppwriteException(
+                'Missing required parameter: "identityId"',
+            );
         }
-        const apiPath = '/users/identities/{identityId}'.replace('{identityId}', identityId);
+        const apiPath = '/users/identities/{identityId}'.replace(
+            '{identityId}',
+            identityId,
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -293,7 +283,12 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async createMD5User<Preferences extends Models.Preferences>(userId: string, email: string, password: string, name?: string): Promise<Models.User<Preferences>> {
+    async createMD5User<Preferences extends Models.Preferences>(
+        userId: string,
+        email: string,
+        password: string,
+        name?: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -301,7 +296,9 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "email"');
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
         const apiPath = '/users/md5';
         const payload: Payload = {};
@@ -321,14 +318,9 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -343,7 +335,12 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async createPHPassUser<Preferences extends Models.Preferences>(userId: string, email: string, password: string, name?: string): Promise<Models.User<Preferences>> {
+    async createPHPassUser<Preferences extends Models.Preferences>(
+        userId: string,
+        email: string,
+        password: string,
+        name?: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -351,7 +348,9 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "email"');
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
         const apiPath = '/users/phpass';
         const payload: Payload = {};
@@ -371,14 +370,9 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -398,7 +392,17 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async createScryptUser<Preferences extends Models.Preferences>(userId: string, email: string, password: string, passwordSalt: string, passwordCpu: number, passwordMemory: number, passwordParallel: number, passwordLength: number, name?: string): Promise<Models.User<Preferences>> {
+    async createScryptUser<Preferences extends Models.Preferences>(
+        userId: string,
+        email: string,
+        password: string,
+        passwordSalt: string,
+        passwordCpu: number,
+        passwordMemory: number,
+        passwordParallel: number,
+        passwordLength: number,
+        name?: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -406,22 +410,34 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "email"');
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
         if (typeof passwordSalt === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "passwordSalt"');
+            throw new AppwriteException(
+                'Missing required parameter: "passwordSalt"',
+            );
         }
         if (typeof passwordCpu === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "passwordCpu"');
+            throw new AppwriteException(
+                'Missing required parameter: "passwordCpu"',
+            );
         }
         if (typeof passwordMemory === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "passwordMemory"');
+            throw new AppwriteException(
+                'Missing required parameter: "passwordMemory"',
+            );
         }
         if (typeof passwordParallel === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "passwordParallel"');
+            throw new AppwriteException(
+                'Missing required parameter: "passwordParallel"',
+            );
         }
         if (typeof passwordLength === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "passwordLength"');
+            throw new AppwriteException(
+                'Missing required parameter: "passwordLength"',
+            );
         }
         const apiPath = '/users/scrypt';
         const payload: Payload = {};
@@ -456,14 +472,9 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -481,7 +492,15 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async createScryptModifiedUser<Preferences extends Models.Preferences>(userId: string, email: string, password: string, passwordSalt: string, passwordSaltSeparator: string, passwordSignerKey: string, name?: string): Promise<Models.User<Preferences>> {
+    async createScryptModifiedUser<Preferences extends Models.Preferences>(
+        userId: string,
+        email: string,
+        password: string,
+        passwordSalt: string,
+        passwordSaltSeparator: string,
+        passwordSignerKey: string,
+        name?: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -489,16 +508,24 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "email"');
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
         if (typeof passwordSalt === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "passwordSalt"');
+            throw new AppwriteException(
+                'Missing required parameter: "passwordSalt"',
+            );
         }
         if (typeof passwordSaltSeparator === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "passwordSaltSeparator"');
+            throw new AppwriteException(
+                'Missing required parameter: "passwordSaltSeparator"',
+            );
         }
         if (typeof passwordSignerKey === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "passwordSignerKey"');
+            throw new AppwriteException(
+                'Missing required parameter: "passwordSignerKey"',
+            );
         }
         const apiPath = '/users/scrypt-modified';
         const payload: Payload = {};
@@ -527,14 +554,9 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -552,13 +574,15 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      */
     async createSHAUser<Preferences extends Models.Preferences>(
-        userId: string, email: string, password: string,
+        userId: string,
+        email: string,
+        password: string,
         params?: {
-            passwordVersion?: PasswordHash,
-            name?: string
-        }
+            passwordVersion?: PasswordHash;
+            name?: string;
+        },
     ): Promise<Models.User<Preferences>> {
-        const  { passwordVersion, name } = params || {}
+        const { passwordVersion, name } = params || {};
 
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
@@ -567,7 +591,9 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "email"');
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
         const apiPath = '/users/sha';
         const payload: Payload = {};
@@ -590,14 +616,9 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -609,7 +630,9 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async get<Preferences extends Models.Preferences>(userId: string): Promise<Models.User<Preferences>> {
+    async get<Preferences extends Models.Preferences>(
+        userId: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -619,14 +642,9 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -648,14 +666,9 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -668,7 +681,10 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async updateEmail<Preferences extends Models.Preferences>(userId: string, email: string): Promise<Models.User<Preferences>> {
+    async updateEmail<Preferences extends Models.Preferences>(
+        userId: string,
+        email: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -684,14 +700,9 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -706,7 +717,10 @@ Labels can be used to grant access to resources. While teams are a way for user&
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async updateLabels<Preferences extends Models.Preferences>(userId: string, labels: string[]): Promise<Models.User<Preferences>> {
+    async updateLabels<Preferences extends Models.Preferences>(
+        userId: string,
+        labels: string[],
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -722,14 +736,9 @@ Labels can be used to grant access to resources. While teams are a way for user&
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
@@ -742,7 +751,10 @@ Labels can be used to grant access to resources. While teams are a way for user&
      * @throws {AppwriteException}
      * @returns {Promise<Models.LogList>}
      */
-    async listLogs(userId: string, queries?: string[]): Promise<Models.LogList> {
+    async listLogs(
+        userId: string,
+        queries?: string[],
+    ): Promise<Models.LogList> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -755,14 +767,9 @@ Labels can be used to grant access to resources. While teams are a way for user&
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -778,20 +785,18 @@ Labels can be used to grant access to resources. While teams are a way for user&
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-        const apiPath = '/users/{userId}/memberships'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/memberships'.replace(
+            '{userId}',
+            userId,
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -804,7 +809,10 @@ Labels can be used to grant access to resources. While teams are a way for user&
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async updateMfa<Preferences extends Models.Preferences>(userId: string, mfa: boolean): Promise<Models.User<Preferences>> {
+    async updateMfa<Preferences extends Models.Preferences>(
+        userId: string,
+        mfa: boolean,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -820,14 +828,9 @@ Labels can be used to grant access to resources. While teams are a way for user&
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -840,27 +843,27 @@ Labels can be used to grant access to resources. While teams are a way for user&
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async deleteMfaAuthenticator<Preferences extends Models.Preferences>(userId: string, type: AuthenticatorType): Promise<Models.User<Preferences>> {
+    async deleteMfaAuthenticator<Preferences extends Models.Preferences>(
+        userId: string,
+        type: AuthenticatorType,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
-        const apiPath = '/users/{userId}/mfa/authenticators/{type}'.replace('{userId}', userId).replace('{type}', type);
+        const apiPath = '/users/{userId}/mfa/authenticators/{type}'
+            .replace('{userId}', userId)
+            .replace('{type}', type);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -876,20 +879,18 @@ Labels can be used to grant access to resources. While teams are a way for user&
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-        const apiPath = '/users/{userId}/mfa/factors'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/mfa/factors'.replace(
+            '{userId}',
+            userId,
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -901,24 +902,24 @@ Labels can be used to grant access to resources. While teams are a way for user&
      * @throws {AppwriteException}
      * @returns {Promise<Models.MfaRecoveryCodes>}
      */
-    async getMfaRecoveryCodes(userId: string): Promise<Models.MfaRecoveryCodes> {
+    async getMfaRecoveryCodes(
+        userId: string,
+    ): Promise<Models.MfaRecoveryCodes> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace(
+            '{userId}',
+            userId,
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -930,24 +931,24 @@ Labels can be used to grant access to resources. While teams are a way for user&
      * @throws {AppwriteException}
      * @returns {Promise<Models.MfaRecoveryCodes>}
      */
-    async updateMfaRecoveryCodes(userId: string): Promise<Models.MfaRecoveryCodes> {
+    async updateMfaRecoveryCodes(
+        userId: string,
+    ): Promise<Models.MfaRecoveryCodes> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace(
+            '{userId}',
+            userId,
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
@@ -959,24 +960,24 @@ Labels can be used to grant access to resources. While teams are a way for user&
      * @throws {AppwriteException}
      * @returns {Promise<Models.MfaRecoveryCodes>}
      */
-    async createMfaRecoveryCodes(userId: string): Promise<Models.MfaRecoveryCodes> {
+    async createMfaRecoveryCodes(
+        userId: string,
+    ): Promise<Models.MfaRecoveryCodes> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace(
+            '{userId}',
+            userId,
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -989,7 +990,10 @@ Labels can be used to grant access to resources. While teams are a way for user&
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async updateName<Preferences extends Models.Preferences>(userId: string, name: string): Promise<Models.User<Preferences>> {
+    async updateName<Preferences extends Models.Preferences>(
+        userId: string,
+        name: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1005,14 +1009,9 @@ Labels can be used to grant access to resources. While teams are a way for user&
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1025,12 +1024,17 @@ Labels can be used to grant access to resources. While teams are a way for user&
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async updatePassword<Preferences extends Models.Preferences>(userId: string, password: string): Promise<Models.User<Preferences>> {
+    async updatePassword<Preferences extends Models.Preferences>(
+        userId: string,
+        password: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
         const apiPath = '/users/{userId}/password'.replace('{userId}', userId);
         const payload: Payload = {};
@@ -1041,14 +1045,9 @@ Labels can be used to grant access to resources. While teams are a way for user&
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1061,7 +1060,10 @@ Labels can be used to grant access to resources. While teams are a way for user&
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async updatePhone<Preferences extends Models.Preferences>(userId: string, number: string): Promise<Models.User<Preferences>> {
+    async updatePhone<Preferences extends Models.Preferences>(
+        userId: string,
+        number: string,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1077,14 +1079,9 @@ Labels can be used to grant access to resources. While teams are a way for user&
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1096,7 +1093,9 @@ Labels can be used to grant access to resources. While teams are a way for user&
      * @throws {AppwriteException}
      * @returns {Promise<Preferences>}
      */
-    async getPrefs<Preferences extends Models.Preferences>(userId: string): Promise<Preferences> {
+    async getPrefs<Preferences extends Models.Preferences>(
+        userId: string,
+    ): Promise<Preferences> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1106,14 +1105,9 @@ Labels can be used to grant access to resources. While teams are a way for user&
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1126,7 +1120,10 @@ Labels can be used to grant access to resources. While teams are a way for user&
      * @throws {AppwriteException}
      * @returns {Promise<Preferences>}
      */
-    async updatePrefs<Preferences extends Models.Preferences>(userId: string, prefs: object): Promise<Preferences> {
+    async updatePrefs<Preferences extends Models.Preferences>(
+        userId: string,
+        prefs: object,
+    ): Promise<Preferences> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1142,14 +1139,9 @@ Labels can be used to grant access to resources. While teams are a way for user&
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1171,14 +1163,9 @@ Labels can be used to grant access to resources. While teams are a way for user&
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1202,14 +1189,9 @@ If you want to generate a token for a custom authentication flow, use the [POST 
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1231,14 +1213,9 @@ If you want to generate a token for a custom authentication flow, use the [POST 
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -1256,22 +1233,21 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof sessionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "sessionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "sessionId"',
+            );
         }
-        const apiPath = '/users/{userId}/sessions/{sessionId}'.replace('{userId}', userId).replace('{sessionId}', sessionId);
+        const apiPath = '/users/{userId}/sessions/{sessionId}'
+            .replace('{userId}', userId)
+            .replace('{sessionId}', sessionId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -1284,7 +1260,10 @@ If you want to generate a token for a custom authentication flow, use the [POST 
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async updateStatus<Preferences extends Models.Preferences>(userId: string, status: boolean): Promise<Models.User<Preferences>> {
+    async updateStatus<Preferences extends Models.Preferences>(
+        userId: string,
+        status: boolean,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1300,14 +1279,9 @@ If you want to generate a token for a custom authentication flow, use the [POST 
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1320,7 +1294,10 @@ If you want to generate a token for a custom authentication flow, use the [POST 
      * @throws {AppwriteException}
      * @returns {Promise<Models.TargetList>}
      */
-    async listTargets(userId: string, queries?: string[]): Promise<Models.TargetList> {
+    async listTargets(
+        userId: string,
+        queries?: string[],
+    ): Promise<Models.TargetList> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1333,14 +1310,9 @@ If you want to generate a token for a custom authentication flow, use the [POST 
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1359,25 +1331,34 @@ If you want to generate a token for a custom authentication flow, use the [POST 
      * @returns {Promise<Models.Target>}
      */
     async createTarget(
-        userId: string, targetId: string, providerType: MessagingProviderType, identifier: string,
+        userId: string,
+        targetId: string,
+        providerType: MessagingProviderType,
+        identifier: string,
         params?: {
-            providerId?: string,
-            name?: string
-        }
+            providerId?: string;
+            name?: string;
+        },
     ): Promise<Models.Target> {
-        const { providerId, name } = params || {}
+        const { providerId, name } = params || {};
 
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof targetId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "targetId"');
+            throw new AppwriteException(
+                'Missing required parameter: "targetId"',
+            );
         }
         if (typeof providerType === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerType"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerType"',
+            );
         }
         if (typeof identifier === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "identifier"');
+            throw new AppwriteException(
+                'Missing required parameter: "identifier"',
+            );
         }
         const apiPath = '/users/{userId}/targets'.replace('{userId}', userId);
         const payload: Payload = {};
@@ -1400,14 +1381,9 @@ If you want to generate a token for a custom authentication flow, use the [POST 
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1425,22 +1401,21 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof targetId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "targetId"');
+            throw new AppwriteException(
+                'Missing required parameter: "targetId"',
+            );
         }
-        const apiPath = '/users/{userId}/targets/{targetId}'.replace('{userId}', userId).replace('{targetId}', targetId);
+        const apiPath = '/users/{userId}/targets/{targetId}'
+            .replace('{userId}', userId)
+            .replace('{targetId}', targetId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1456,14 +1431,24 @@ If you want to generate a token for a custom authentication flow, use the [POST 
      * @throws {AppwriteException}
      * @returns {Promise<Models.Target>}
      */
-    async updateTarget(userId: string, targetId: string, identifier?: string, providerId?: string, name?: string): Promise<Models.Target> {
+    async updateTarget(
+        userId: string,
+        targetId: string,
+        identifier?: string,
+        providerId?: string,
+        name?: string,
+    ): Promise<Models.Target> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof targetId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "targetId"');
+            throw new AppwriteException(
+                'Missing required parameter: "targetId"',
+            );
         }
-        const apiPath = '/users/{userId}/targets/{targetId}'.replace('{userId}', userId).replace('{targetId}', targetId);
+        const apiPath = '/users/{userId}/targets/{targetId}'
+            .replace('{userId}', userId)
+            .replace('{targetId}', targetId);
         const payload: Payload = {};
         if (typeof identifier !== 'undefined') {
             payload['identifier'] = identifier;
@@ -1478,14 +1463,9 @@ If you want to generate a token for a custom authentication flow, use the [POST 
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1503,22 +1483,21 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof targetId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "targetId"');
+            throw new AppwriteException(
+                'Missing required parameter: "targetId"',
+            );
         }
-        const apiPath = '/users/{userId}/targets/{targetId}'.replace('{userId}', userId).replace('{targetId}', targetId);
+        const apiPath = '/users/{userId}/targets/{targetId}'
+            .replace('{userId}', userId)
+            .replace('{targetId}', targetId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -1537,11 +1516,11 @@ If you want to generate a token for a custom authentication flow, use the [POST 
     async createToken(
         userId: string,
         params?: {
-            length?: number,
-            expire?: number
-        }
+            length?: number;
+            expire?: number;
+        },
     ): Promise<Models.Token> {
-        const { length, expire } = params || {}
+        const { length, expire } = params || {};
 
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
@@ -1558,14 +1537,9 @@ If you want to generate a token for a custom authentication flow, use the [POST 
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1578,14 +1552,22 @@ If you want to generate a token for a custom authentication flow, use the [POST 
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async updateEmailVerification<Preferences extends Models.Preferences>(userId: string, emailVerification: boolean): Promise<Models.User<Preferences>> {
+    async updateEmailVerification<Preferences extends Models.Preferences>(
+        userId: string,
+        emailVerification: boolean,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof emailVerification === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "emailVerification"');
+            throw new AppwriteException(
+                'Missing required parameter: "emailVerification"',
+            );
         }
-        const apiPath = '/users/{userId}/verification'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/verification'.replace(
+            '{userId}',
+            userId,
+        );
         const payload: Payload = {};
         if (typeof emailVerification !== 'undefined') {
             payload['emailVerification'] = emailVerification;
@@ -1594,14 +1576,9 @@ If you want to generate a token for a custom authentication flow, use the [POST 
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1614,14 +1591,22 @@ If you want to generate a token for a custom authentication flow, use the [POST 
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    async updatePhoneVerification<Preferences extends Models.Preferences>(userId: string, phoneVerification: boolean): Promise<Models.User<Preferences>> {
+    async updatePhoneVerification<Preferences extends Models.Preferences>(
+        userId: string,
+        phoneVerification: boolean,
+    ): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof phoneVerification === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "phoneVerification"');
+            throw new AppwriteException(
+                'Missing required parameter: "phoneVerification"',
+            );
         }
-        const apiPath = '/users/{userId}/verification/phone'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/verification/phone'.replace(
+            '{userId}',
+            userId,
+        );
         const payload: Payload = {};
         if (typeof phoneVerification !== 'undefined') {
             payload['phoneVerification'] = phoneVerification;
@@ -1630,13 +1615,8 @@ If you want to generate a token for a custom authentication flow, use the [POST 
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 }

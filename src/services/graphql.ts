@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    UploadProgress,
+} from '../client';
 import type { Models } from '../models';
 
 export class Graphql {
@@ -31,14 +36,9 @@ export class Graphql {
         const apiHeaders: { [header: string]: string } = {
             'x-sdk-graphql': 'true',
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
     /**
      * GraphQL endpoint
@@ -63,13 +63,8 @@ export class Graphql {
         const apiHeaders: { [header: string]: string } = {
             'x-sdk-graphql': 'true',
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 }

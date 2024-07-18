@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    UploadProgress,
+} from '../client';
 import type { Models } from '../models';
 import { Runtime } from '../enums/runtime';
 import { ExecutionMethod } from '../enums/execution-method';
@@ -20,7 +25,10 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.FunctionList>}
      */
-    async list(queries?: string[], search?: string): Promise<Models.FunctionList> {
+    async list(
+        queries?: string[],
+        search?: string,
+    ): Promise<Models.FunctionList> {
         const apiPath = '/functions';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -33,14 +41,9 @@ export class Functions {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Create function
@@ -77,23 +80,23 @@ export class Functions {
         runtime: Runtime,
         params: {
             execute?: string[];
-             events?: string[];
-             schedule?: string;
-             timeout?: number;
-             enabled?: boolean;
-             logging?: boolean;
-             entrypoint?: string;
-             commands?: string;
-             installationId?: string;
-             providerRepositoryId?: string;
-             providerBranch?: string;
-             providerSilentMode?: boolean;
-             providerRootDirectory?: string;
-             templateRepository?: string;
-             templateOwner?: string;
-             templateRootDirectory?: string;
-             templateBranch?: string;
-        }
+            events?: string[];
+            schedule?: string;
+            timeout?: number;
+            enabled?: boolean;
+            logging?: boolean;
+            entrypoint?: string;
+            commands?: string;
+            installationId?: string;
+            providerRepositoryId?: string;
+            providerBranch?: string;
+            providerSilentMode?: boolean;
+            providerRootDirectory?: string;
+            templateRepository?: string;
+            templateOwner?: string;
+            templateRootDirectory?: string;
+            templateBranch?: string;
+        },
     ): Promise<Models.Function> {
         const {
             execute,
@@ -112,18 +115,21 @@ export class Functions {
             templateRepository,
             templateOwner,
             templateRootDirectory,
-            templateBranch
+            templateBranch,
         } = params || {};
 
-
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         if (typeof runtime === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "runtime"');
+            throw new AppwriteException(
+                'Missing required parameter: "runtime"',
+            );
         }
         const apiPath = '/functions';
         const payload: Payload = {};
@@ -191,14 +197,9 @@ export class Functions {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
     /**
      * List runtimes
@@ -215,14 +216,9 @@ export class Functions {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Get function
@@ -235,22 +231,22 @@ export class Functions {
      */
     async get(functionId: string): Promise<Models.Function> {
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-        const apiPath = '/functions/{functionId}'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}'.replace(
+            '{functionId}',
+            functionId,
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
     /**
      * Update function
@@ -281,21 +277,21 @@ export class Functions {
         functionId: string,
         name: string,
         params?: {
-            runtime?: Runtime,
-            execute?: string[],
-            events?: string[],
-            schedule?: string,
-            timeout?: number,
-            enabled?: boolean,
-            logging?: boolean,
-            entrypoint?: string,
-            commands?: string,
-            installationId?: string,
-            providerRepositoryId?: string,
-            providerBranch?: string,
-            providerSilentMode?: boolean,
-            providerRootDirectory?: string
-        }
+            runtime?: Runtime;
+            execute?: string[];
+            events?: string[];
+            schedule?: string;
+            timeout?: number;
+            enabled?: boolean;
+            logging?: boolean;
+            entrypoint?: string;
+            commands?: string;
+            installationId?: string;
+            providerRepositoryId?: string;
+            providerBranch?: string;
+            providerSilentMode?: boolean;
+            providerRootDirectory?: string;
+        },
     ): Promise<Models.Function> {
         const {
             runtime,
@@ -311,16 +307,21 @@ export class Functions {
             providerRepositoryId,
             providerBranch,
             providerSilentMode,
-            providerRootDirectory
+            providerRootDirectory,
         } = params || {};
 
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-        const apiPath = '/functions/{functionId}'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}'.replace(
+            '{functionId}',
+            functionId,
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -371,14 +372,9 @@ export class Functions {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
@@ -392,22 +388,22 @@ export class Functions {
      */
     async delete(functionId: string): Promise<{}> {
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-        const apiPath = '/functions/{functionId}'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}'.replace(
+            '{functionId}',
+            functionId,
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -422,13 +418,21 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DeploymentList>}
      */
-    async listDeployments(functionId: string, params?: { queries?: string[], search?: string }): Promise<Models.DeploymentList> {
-        const {queries, search} = params || {};
+    async listDeployments(
+        functionId: string,
+        params?: { queries?: string[]; search?: string },
+    ): Promise<Models.DeploymentList> {
+        const { queries, search } = params || {};
 
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-        const apiPath = '/functions/{functionId}/deployments'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/deployments'.replace(
+            '{functionId}',
+            functionId,
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -440,14 +444,9 @@ export class Functions {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -474,23 +473,30 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         code: File,
         activate: boolean,
         params?: {
-            entrypoint?: string,
-            commands?: string,
-            onProgress: (progress: UploadProgress) => {}
-        }
+            entrypoint?: string;
+            commands?: string;
+            onProgress: (progress: UploadProgress) => {};
+        },
     ): Promise<Models.Deployment> {
-        const {entrypoint, commands, onProgress = () => {}} = params || {};
+        const { entrypoint, commands, onProgress = () => {} } = params || {};
 
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof code === 'undefined') {
             throw new AppwriteException('Missing required parameter: "code"');
         }
         if (typeof activate === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "activate"');
+            throw new AppwriteException(
+                'Missing required parameter: "activate"',
+            );
         }
-        const apiPath = '/functions/{functionId}/deployments'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/deployments'.replace(
+            '{functionId}',
+            functionId,
+        );
         const payload: Payload = {};
         if (typeof entrypoint !== 'undefined') {
             payload['entrypoint'] = entrypoint;
@@ -508,14 +514,14 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'multipart/form-data',
-        }
+        };
 
         return await this.client.chunkedUpload(
             'post',
             uri,
             apiHeaders,
             payload,
-            onProgress
+            onProgress,
         );
     }
 
@@ -529,27 +535,31 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
      * @throws {AppwriteException}
      * @returns {Promise<Models.Deployment>}
      */
-    async getDeployment(functionId: string, deploymentId: string): Promise<Models.Deployment> {
+    async getDeployment(
+        functionId: string,
+        deploymentId: string,
+    ): Promise<Models.Deployment> {
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof deploymentId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "deploymentId"');
+            throw new AppwriteException(
+                'Missing required parameter: "deploymentId"',
+            );
         }
-        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId);
+        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'
+            .replace('{functionId}', functionId)
+            .replace('{deploymentId}', deploymentId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -562,27 +572,31 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      */
-    async updateDeployment(functionId: string, deploymentId: string): Promise<Models.Function> {
+    async updateDeployment(
+        functionId: string,
+        deploymentId: string,
+    ): Promise<Models.Function> {
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof deploymentId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "deploymentId"');
+            throw new AppwriteException(
+                'Missing required parameter: "deploymentId"',
+            );
         }
-        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId);
+        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'
+            .replace('{functionId}', functionId)
+            .replace('{deploymentId}', deploymentId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -595,27 +609,31 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    async deleteDeployment(functionId: string, deploymentId: string): Promise<{}> {
+    async deleteDeployment(
+        functionId: string,
+        deploymentId: string,
+    ): Promise<{}> {
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof deploymentId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "deploymentId"');
+            throw new AppwriteException(
+                'Missing required parameter: "deploymentId"',
+            );
         }
-        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId);
+        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'
+            .replace('{functionId}', functionId)
+            .replace('{deploymentId}', deploymentId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -629,30 +647,39 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    async createBuild(functionId: string, deploymentId: string, buildId: string): Promise<{}> {
+    async createBuild(
+        functionId: string,
+        deploymentId: string,
+        buildId: string,
+    ): Promise<{}> {
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof deploymentId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "deploymentId"');
+            throw new AppwriteException(
+                'Missing required parameter: "deploymentId"',
+            );
         }
         if (typeof buildId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "buildId"');
+            throw new AppwriteException(
+                'Missing required parameter: "buildId"',
+            );
         }
-        const apiPath = '/functions/{functionId}/deployments/{deploymentId}/builds/{buildId}'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId).replace('{buildId}', buildId);
+        const apiPath =
+            '/functions/{functionId}/deployments/{deploymentId}/builds/{buildId}'
+                .replace('{functionId}', functionId)
+                .replace('{deploymentId}', deploymentId)
+                .replace('{buildId}', buildId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -665,27 +692,37 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
      * @throws {AppwriteException}
      * @returns {Promise<ArrayBuffer>}
      */
-    async downloadDeployment(functionId: string, deploymentId: string): Promise<ArrayBuffer> {
+    async downloadDeployment(
+        functionId: string,
+        deploymentId: string,
+    ): Promise<ArrayBuffer> {
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof deploymentId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "deploymentId"');
+            throw new AppwriteException(
+                'Missing required parameter: "deploymentId"',
+            );
         }
-        const apiPath = '/functions/{functionId}/deployments/{deploymentId}/download'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId);
+        const apiPath =
+            '/functions/{functionId}/deployments/{deploymentId}/download'
+                .replace('{functionId}', functionId)
+                .replace('{deploymentId}', deploymentId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
         return await this.client.call(
             'get',
             uri,
             apiHeaders,
             payload,
-            'arrayBuffer'
+            'arrayBuffer',
         );
     }
 
@@ -701,13 +738,21 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
      * @throws {AppwriteException}
      * @returns {Promise<Models.ExecutionList>}
      */
-    async listExecutions(functionId: string, params?: { queries?: string[], search?: string}): Promise<Models.ExecutionList> {
-        const { queries, search } = params || {}
+    async listExecutions(
+        functionId: string,
+        params?: { queries?: string[]; search?: string },
+    ): Promise<Models.ExecutionList> {
+        const { queries, search } = params || {};
 
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-        const apiPath = '/functions/{functionId}/executions'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/executions'.replace(
+            '{functionId}',
+            functionId,
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -719,14 +764,9 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -747,19 +787,24 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
     async createExecution(
         functionId: string,
         params?: {
-            body?: string,
-            async?: boolean, 
-            xpath?: string,
-            method?: ExecutionMethod,
-            headers?: object
-        }
+            body?: string;
+            async?: boolean;
+            xpath?: string;
+            method?: ExecutionMethod;
+            headers?: object;
+        },
     ): Promise<Models.Execution> {
         const { body, async, xpath, method, headers } = params || {};
 
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-        const apiPath = '/functions/{functionId}/executions'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/executions'.replace(
+            '{functionId}',
+            functionId,
+        );
         const payload: Payload = {};
         if (typeof body !== 'undefined') {
             payload['body'] = body;
@@ -780,14 +825,9 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -800,27 +840,31 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
      * @throws {AppwriteException}
      * @returns {Promise<Models.Execution>}
      */
-    async getExecution(functionId: string, executionId: string): Promise<Models.Execution> {
+    async getExecution(
+        functionId: string,
+        executionId: string,
+    ): Promise<Models.Execution> {
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof executionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "executionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "executionId"',
+            );
         }
-        const apiPath = '/functions/{functionId}/executions/{executionId}'.replace('{functionId}', functionId).replace('{executionId}', executionId);
+        const apiPath = '/functions/{functionId}/executions/{executionId}'
+            .replace('{functionId}', functionId)
+            .replace('{executionId}', executionId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -834,22 +878,22 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
      */
     async listVariables(functionId: string): Promise<Models.VariableList> {
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-        const apiPath = '/functions/{functionId}/variables'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/variables'.replace(
+            '{functionId}',
+            functionId,
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -863,9 +907,15 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    async createVariable(functionId: string, key: string, value: string): Promise<Models.Variable> {
+    async createVariable(
+        functionId: string,
+        key: string,
+        value: string,
+    ): Promise<Models.Variable> {
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof key === 'undefined') {
             throw new AppwriteException('Missing required parameter: "key"');
@@ -873,7 +923,10 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         if (typeof value === 'undefined') {
             throw new AppwriteException('Missing required parameter: "value"');
         }
-        const apiPath = '/functions/{functionId}/variables'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/variables'.replace(
+            '{functionId}',
+            functionId,
+        );
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -885,14 +938,9 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -905,27 +953,31 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    async getVariable(functionId: string, variableId: string): Promise<Models.Variable> {
+    async getVariable(
+        functionId: string,
+        variableId: string,
+    ): Promise<Models.Variable> {
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof variableId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "variableId"');
+            throw new AppwriteException(
+                'Missing required parameter: "variableId"',
+            );
         }
-        const apiPath = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', functionId).replace('{variableId}', variableId);
+        const apiPath = '/functions/{functionId}/variables/{variableId}'
+            .replace('{functionId}', functionId)
+            .replace('{variableId}', variableId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -940,17 +992,28 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    async updateVariable(functionId: string, variableId: string, key: string, value?: string): Promise<Models.Variable> {
+    async updateVariable(
+        functionId: string,
+        variableId: string,
+        key: string,
+        value?: string,
+    ): Promise<Models.Variable> {
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof variableId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "variableId"');
+            throw new AppwriteException(
+                'Missing required parameter: "variableId"',
+            );
         }
         if (typeof key === 'undefined') {
             throw new AppwriteException('Missing required parameter: "key"');
         }
-        const apiPath = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', functionId).replace('{variableId}', variableId);
+        const apiPath = '/functions/{functionId}/variables/{variableId}'
+            .replace('{functionId}', functionId)
+            .replace('{variableId}', variableId);
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -962,14 +1025,9 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
@@ -984,24 +1042,25 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
      */
     async deleteVariable(functionId: string, variableId: string): Promise<{}> {
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof variableId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "variableId"');
+            throw new AppwriteException(
+                'Missing required parameter: "variableId"',
+            );
         }
-        const apiPath = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', functionId).replace('{variableId}', variableId);
+        const apiPath = '/functions/{functionId}/variables/{variableId}'
+            .replace('{functionId}', functionId)
+            .replace('{variableId}', variableId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('delete', uri, apiHeaders, payload);
     }
 }

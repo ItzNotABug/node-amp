@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    UploadProgress,
+} from '../client';
 import type { Models } from '../models';
 import { Browser } from '../enums/browser';
 import { CreditCard } from '../enums/credit-card';
@@ -54,14 +59,14 @@ When one dimension is specified and the other is 0, the image is scaled with pre
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
         return await this.client.call(
             'get',
             uri,
             apiHeaders,
             payload,
-            'arrayBuffer'
+            'arrayBuffer',
         );
     }
 
@@ -109,14 +114,14 @@ When one dimension is specified and the other is 0, the image is scaled with pre
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
         return await this.client.call(
             'get',
             uri,
             apiHeaders,
             payload,
-            'arrayBuffer'
+            'arrayBuffer',
         );
     }
     /**
@@ -142,14 +147,14 @@ When one dimension is specified and the other is 0, the image is scaled with pre
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
         return await this.client.call(
             'get',
             uri,
             apiHeaders,
             payload,
-            'arrayBuffer'
+            'arrayBuffer',
         );
     }
 
@@ -197,14 +202,14 @@ When one dimension is specified and the other is 0, the image is scaled with pre
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
         return await this.client.call(
             'get',
             uri,
             apiHeaders,
             payload,
-            'arrayBuffer'
+            'arrayBuffer',
         );
     }
 
@@ -250,14 +255,14 @@ When one dimension is specified and the other is 0, the image is scaled with pre
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
         return await this.client.call(
             'get',
             uri,
             apiHeaders,
             payload,
-            'arrayBuffer'
+            'arrayBuffer',
         );
     }
 
@@ -278,14 +283,12 @@ When one dimension is specified and the other is 0, the image is scaled with pre
      * @throws {AppwriteException}
      * @returns {Promise<ArrayBuffer>}
      */
-    async getInitials(
-        params?: {
-            name?: string;
-            width?: number;
-            height?: number;
-            background?: string;
-        }
-    ): Promise<ArrayBuffer> {
+    async getInitials(params?: {
+        name?: string;
+        width?: number;
+        height?: number;
+        background?: string;
+    }): Promise<ArrayBuffer> {
         const { name, width, height, background } = params || {};
 
         const apiPath = '/avatars/initials';
@@ -306,14 +309,14 @@ When one dimension is specified and the other is 0, the image is scaled with pre
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
         return await this.client.call(
             'get',
             uri,
             apiHeaders,
             payload,
-            'arrayBuffer'
+            'arrayBuffer',
         );
     }
 
@@ -362,14 +365,14 @@ When one dimension is specified and the other is 0, the image is scaled with pre
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
         return await this.client.call(
             'get',
             uri,
             apiHeaders,
             payload,
-            'arrayBuffer'
+            'arrayBuffer',
         );
     }
 }

@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    UploadProgress,
+} from '../client';
 import type { Models } from '../models';
 import { SmtpEncryption } from '../enums/smtp-encryption';
 
@@ -20,7 +25,10 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MessageList>}
      */
-    async listMessages(params?: { queries?: string[], search?: string }): Promise<Models.MessageList> {
+    async listMessages(params?: {
+        queries?: string[];
+        search?: string;
+    }): Promise<Models.MessageList> {
         const { queries, search } = params || {};
 
         const apiPath = '/messaging/messages';
@@ -35,14 +43,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -67,29 +70,47 @@ export class Messaging {
      * @returns {Promise<Models.Message>}
      */
     async createEmail(
-        messageId: string, subject: string, content: string,
+        messageId: string,
+        subject: string,
+        content: string,
         params?: {
-            topics?: string[],
-            users?: string[],
-            targets?: string[],
-            cc?: string[],
-            bcc?: string[],
-            attachments?: string[],
-            draft?: boolean,
-            html?: boolean,
-            scheduledAt?: string
-        }
+            topics?: string[];
+            users?: string[];
+            targets?: string[];
+            cc?: string[];
+            bcc?: string[];
+            attachments?: string[];
+            draft?: boolean;
+            html?: boolean;
+            scheduledAt?: string;
+        },
     ): Promise<Models.Message> {
-        const {topics, users, targets, cc, bcc, attachments, draft, html, scheduledAt} = params || {};
+        const {
+            topics,
+            users,
+            targets,
+            cc,
+            bcc,
+            attachments,
+            draft,
+            html,
+            scheduledAt,
+        } = params || {};
 
         if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
         if (typeof subject === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "subject"');
+            throw new AppwriteException(
+                'Missing required parameter: "subject"',
+            );
         }
         if (typeof content === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "content"');
+            throw new AppwriteException(
+                'Missing required parameter: "content"',
+            );
         }
         const apiPath = '/messaging/messages/email';
         const payload: Payload = {};
@@ -133,14 +154,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -167,14 +183,43 @@ export class Messaging {
      */
     async updateEmail(
         messageId: string,
-        params?: { topics?: string[], users?: string[], targets?: string[], subject?: string, content?: string, draft?: boolean, html?: boolean, cc?: string[], bcc?: string[], scheduledAt?: string, attachments?: string[] }
+        params?: {
+            topics?: string[];
+            users?: string[];
+            targets?: string[];
+            subject?: string;
+            content?: string;
+            draft?: boolean;
+            html?: boolean;
+            cc?: string[];
+            bcc?: string[];
+            scheduledAt?: string;
+            attachments?: string[];
+        },
     ): Promise<Models.Message> {
-        const {topics, users, targets, subject, content, draft, html, cc, bcc, scheduledAt, attachments} = params || {};
+        const {
+            topics,
+            users,
+            targets,
+            subject,
+            content,
+            draft,
+            html,
+            cc,
+            bcc,
+            scheduledAt,
+            attachments,
+        } = params || {};
 
         if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
-        const apiPath = '/messaging/messages/email/{messageId}'.replace('{messageId}', messageId);
+        const apiPath = '/messaging/messages/email/{messageId}'.replace(
+            '{messageId}',
+            messageId,
+        );
         const payload: Payload = {};
         if (typeof topics !== 'undefined') {
             payload['topics'] = topics;
@@ -213,14 +258,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -249,7 +289,9 @@ export class Messaging {
      * @returns {Promise<Models.Message>}
      */
     async createPush(
-        messageId: string, title: string, body: string,
+        messageId: string,
+        title: string,
+        body: string,
         params?: {
             topics?: string[];
             users?: string[];
@@ -264,12 +306,28 @@ export class Messaging {
             badge?: string;
             draft?: boolean;
             scheduledAt?: string;
-        }
+        },
     ): Promise<Models.Message> {
-        const {topics, users, targets, data, action, image, icon, sound, color, tag, badge, draft, scheduledAt} = params || {};
+        const {
+            topics,
+            users,
+            targets,
+            data,
+            action,
+            image,
+            icon,
+            sound,
+            color,
+            tag,
+            badge,
+            draft,
+            scheduledAt,
+        } = params || {};
 
         if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
         if (typeof title === 'undefined') {
             throw new AppwriteException('Missing required parameter: "title"');
@@ -331,14 +389,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -385,14 +438,35 @@ export class Messaging {
             badge?: number;
             draft?: boolean;
             scheduledAt?: string;
-        }
+        },
     ): Promise<Models.Message> {
-        const { topics, users, targets, title, body, data, action, image, icon, sound, color, tag, badge, draft, scheduledAt } = params || {};
+        const {
+            topics,
+            users,
+            targets,
+            title,
+            body,
+            data,
+            action,
+            image,
+            icon,
+            sound,
+            color,
+            tag,
+            badge,
+            draft,
+            scheduledAt,
+        } = params || {};
 
         if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
-        const apiPath = '/messaging/messages/push/{messageId}'.replace('{messageId}', messageId);
+        const apiPath = '/messaging/messages/push/{messageId}'.replace(
+            '{messageId}',
+            messageId,
+        );
         const payload: Payload = {};
         if (typeof topics !== 'undefined') {
             payload['topics'] = topics;
@@ -443,14 +517,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -470,22 +539,27 @@ export class Messaging {
      * @returns {Promise<Models.Message>}
      */
     async createSms(
-        messageId: string, content: string,
+        messageId: string,
+        content: string,
         params?: {
             topics?: string[];
             users?: string[];
             targets?: string[];
             draft?: boolean;
             scheduledAt?: string;
-        }
+        },
     ): Promise<Models.Message> {
         const { topics, users, targets, draft, scheduledAt } = params || {};
 
         if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
         if (typeof content === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "content"');
+            throw new AppwriteException(
+                'Missing required parameter: "content"',
+            );
         }
         const apiPath = '/messaging/messages/sms';
         const payload: Payload = {};
@@ -514,14 +588,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -550,14 +619,20 @@ export class Messaging {
             content?: string;
             draft?: boolean;
             scheduledAt?: string;
-        }
+        },
     ): Promise<Models.Message> {
-        const { topics, users, targets, content, draft, scheduledAt } = params || {};
+        const { topics, users, targets, content, draft, scheduledAt } =
+            params || {};
 
         if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
-        const apiPath = '/messaging/messages/sms/{messageId}'.replace('{messageId}', messageId);
+        const apiPath = '/messaging/messages/sms/{messageId}'.replace(
+            '{messageId}',
+            messageId,
+        );
         const payload: Payload = {};
         if (typeof topics !== 'undefined') {
             payload['topics'] = topics;
@@ -581,14 +656,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -603,22 +673,22 @@ export class Messaging {
      */
     async getMessage(messageId: string): Promise<Models.Message> {
         if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
-        const apiPath = '/messaging/messages/{messageId}'.replace('{messageId}', messageId);
+        const apiPath = '/messaging/messages/{messageId}'.replace(
+            '{messageId}',
+            messageId,
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -632,22 +702,22 @@ export class Messaging {
      */
     async delete(messageId: string): Promise<{}> {
         if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
-        const apiPath = '/messaging/messages/{messageId}'.replace('{messageId}', messageId);
+        const apiPath = '/messaging/messages/{messageId}'.replace(
+            '{messageId}',
+            messageId,
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -660,11 +730,19 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.LogList>}
      */
-    async listMessageLogs(messageId: string, queries?: string[]): Promise<Models.LogList> {
+    async listMessageLogs(
+        messageId: string,
+        queries?: string[],
+    ): Promise<Models.LogList> {
         if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
-        const apiPath = '/messaging/messages/{messageId}/logs'.replace('{messageId}', messageId);
+        const apiPath = '/messaging/messages/{messageId}/logs'.replace(
+            '{messageId}',
+            messageId,
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -673,14 +751,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -693,11 +766,19 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.TargetList>}
      */
-    async listTargets(messageId: string, queries?: string[]): Promise<Models.TargetList> {
+    async listTargets(
+        messageId: string,
+        queries?: string[],
+    ): Promise<Models.TargetList> {
         if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
-        const apiPath = '/messaging/messages/{messageId}/targets'.replace('{messageId}', messageId);
+        const apiPath = '/messaging/messages/{messageId}/targets'.replace(
+            '{messageId}',
+            messageId,
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -706,14 +787,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -726,7 +802,10 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProviderList>}
      */
-    async listProviders(queries?: string[], search?: string): Promise<Models.ProviderList> {
+    async listProviders(
+        queries?: string[],
+        search?: string,
+    ): Promise<Models.ProviderList> {
         const apiPath = '/messaging/providers';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -739,14 +818,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -766,7 +840,8 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      */
     async createApnsProvider(
-        providerId: string, name: string,
+        providerId: string,
+        name: string,
         params?: {
             authKey?: string;
             authKeyId?: string;
@@ -774,12 +849,15 @@ export class Messaging {
             bundleId?: string;
             sandbox?: boolean;
             enabled?: boolean;
-        }
+        },
     ): Promise<Models.Provider> {
-        const { authKey, authKeyId, teamId, bundleId, sandbox, enabled } = params || {};
+        const { authKey, authKeyId, teamId, bundleId, sandbox, enabled } =
+            params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -814,14 +892,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -851,14 +924,20 @@ export class Messaging {
             teamId?: string;
             bundleId?: string;
             sandbox?: boolean;
-        }
+        },
     ): Promise<Models.Provider> {
-        const { name, enabled, authKey, authKeyId, teamId, bundleId, sandbox } = params || {};
+        const { name, enabled, authKey, authKeyId, teamId, bundleId, sandbox } =
+            params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-        const apiPath = '/messaging/providers/apns/{providerId}'.replace('{providerId}', providerId);
+        const apiPath = '/messaging/providers/apns/{providerId}'.replace(
+            '{providerId}',
+            providerId,
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -885,14 +964,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -909,16 +983,19 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      */
     async createFcmProvider(
-        providerId: string, name: string,
+        providerId: string,
+        name: string,
         params?: {
             serviceAccountJSON?: object;
             enabled?: boolean;
-        }
+        },
     ): Promise<Models.Provider> {
         const { serviceAccountJSON, enabled } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -941,14 +1018,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -970,14 +1042,19 @@ export class Messaging {
             name?: string;
             enabled?: boolean;
             serviceAccountJSON?: object;
-        }
+        },
     ): Promise<Models.Provider> {
         const { name, enabled, serviceAccountJSON } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-        const apiPath = '/messaging/providers/fcm/{providerId}'.replace('{providerId}', providerId);
+        const apiPath = '/messaging/providers/fcm/{providerId}'.replace(
+            '{providerId}',
+            providerId,
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -992,14 +1069,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1022,7 +1094,8 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      */
     async createMailgunProvider(
-        providerId: string, name: string,
+        providerId: string,
+        name: string,
         params?: {
             apiKey?: string;
             domain?: string;
@@ -1032,12 +1105,23 @@ export class Messaging {
             replyToName?: string;
             replyToEmail?: string;
             enabled?: boolean;
-        }
+        },
     ): Promise<Models.Provider> {
-        const { apiKey, domain, isEuRegion, fromName, fromEmail, replyToName, replyToEmail, enabled } = params || {};
+        const {
+            apiKey,
+            domain,
+            isEuRegion,
+            fromName,
+            fromEmail,
+            replyToName,
+            replyToEmail,
+            enabled,
+        } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -1078,14 +1162,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1119,14 +1198,29 @@ export class Messaging {
             fromEmail?: string;
             replyToName?: string;
             replyToEmail?: string;
-        }
+        },
     ): Promise<Models.Provider> {
-        const { name, apiKey, domain, isEuRegion, enabled, fromName, fromEmail, replyToName, replyToEmail } = params || {};
+        const {
+            name,
+            apiKey,
+            domain,
+            isEuRegion,
+            enabled,
+            fromName,
+            fromEmail,
+            replyToName,
+            replyToEmail,
+        } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-        const apiPath = '/messaging/providers/mailgun/{providerId}'.replace('{providerId}', providerId);
+        const apiPath = '/messaging/providers/mailgun/{providerId}'.replace(
+            '{providerId}',
+            providerId,
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -1159,14 +1253,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1185,18 +1274,21 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      */
     async createMsg91Provider(
-        providerId: string, name: string,
+        providerId: string,
+        name: string,
         params?: {
-            templateId?: string,
-            senderId?: string,
-            authKey?: string,
-            enabled?: boolean
-        }
+            templateId?: string;
+            senderId?: string;
+            authKey?: string;
+            enabled?: boolean;
+        },
     ): Promise<Models.Provider> {
         const { templateId, senderId, authKey, enabled } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -1225,14 +1317,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1253,19 +1340,24 @@ export class Messaging {
     async updateMsg91Provider(
         providerId: string,
         params?: {
-            name?: string,
-            enabled?: boolean,
-            templateId?: string,
-            senderId?: string,
-            authKey?: string
-        }
+            name?: string;
+            enabled?: boolean;
+            templateId?: string;
+            senderId?: string;
+            authKey?: string;
+        },
     ): Promise<Models.Provider> {
         const { name, enabled, templateId, senderId, authKey } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-        const apiPath = '/messaging/providers/msg91/{providerId}'.replace('{providerId}', providerId);
+        const apiPath = '/messaging/providers/msg91/{providerId}'.replace(
+            '{providerId}',
+            providerId,
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -1286,14 +1378,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1314,20 +1401,30 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      */
     async createSendgridProvider(
-        providerId: string, name: string,
+        providerId: string,
+        name: string,
         params: {
-            apiKey?: string,
-            fromName?: string,
-            fromEmail?: string,
-            replyToName?: string,
-            replyToEmail?: string,
-            enabled?: boolean
-        }
+            apiKey?: string;
+            fromName?: string;
+            fromEmail?: string;
+            replyToName?: string;
+            replyToEmail?: string;
+            enabled?: boolean;
+        },
     ): Promise<Models.Provider> {
-        const { apiKey, fromName, fromEmail, replyToName, replyToEmail, enabled } = params || {};
+        const {
+            apiKey,
+            fromName,
+            fromEmail,
+            replyToName,
+            replyToEmail,
+            enabled,
+        } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -1362,14 +1459,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1392,21 +1484,34 @@ export class Messaging {
     async updateSendgridProvider(
         providerId: string,
         params?: {
-            name?: string,
-            enabled?: boolean,
-            apiKey?: string,
-            fromName?: string,
-            fromEmail?: string,
-            replyToName?: string,
-            replyToEmail?: string
-        }
+            name?: string;
+            enabled?: boolean;
+            apiKey?: string;
+            fromName?: string;
+            fromEmail?: string;
+            replyToName?: string;
+            replyToEmail?: string;
+        },
     ): Promise<Models.Provider> {
-        const { name, enabled, apiKey, fromName, fromEmail, replyToName, replyToEmail } = params || {};
+        const {
+            name,
+            enabled,
+            apiKey,
+            fromName,
+            fromEmail,
+            replyToName,
+            replyToEmail,
+        } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-        const apiPath = '/messaging/providers/sendgrid/{providerId}'.replace('{providerId}', providerId);
+        const apiPath = '/messaging/providers/sendgrid/{providerId}'.replace(
+            '{providerId}',
+            providerId,
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -1433,14 +1538,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1467,25 +1567,41 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      */
     async createSmtpProvider(
-        providerId: string, name: string, host: string,
+        providerId: string,
+        name: string,
+        host: string,
         params?: {
-            port?: number,
-            username?: string,
-            password?: string,
-            encryption?: SmtpEncryption,
-            autoTLS?: boolean,
-            mailer?: string,
-            fromName?: string,
-            fromEmail?: string,
-            replyToName?: string,
-            replyToEmail?: string,
-            enabled?: boolean
-        }
+            port?: number;
+            username?: string;
+            password?: string;
+            encryption?: SmtpEncryption;
+            autoTLS?: boolean;
+            mailer?: string;
+            fromName?: string;
+            fromEmail?: string;
+            replyToName?: string;
+            replyToEmail?: string;
+            enabled?: boolean;
+        },
     ): Promise<Models.Provider> {
-        const { port, username, password, encryption, autoTLS, mailer, fromName, fromEmail, replyToName, replyToEmail, enabled } = params || {};
+        const {
+            port,
+            username,
+            password,
+            encryption,
+            autoTLS,
+            mailer,
+            fromName,
+            fromEmail,
+            replyToName,
+            replyToEmail,
+            enabled,
+        } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -1541,14 +1657,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1577,27 +1688,46 @@ export class Messaging {
     async updateSmtpProvider(
         providerId: string,
         params?: {
-            name?: string,
-            host?: string,
-            port?: number,
-            username?: string,
-            password?: string,
-            encryption?: SmtpEncryption,
-            autoTLS?: boolean,
-            mailer?: string,
-            fromName?: string,
-            fromEmail?: string,
-            replyToName?: string,
-            replyToEmail?: string,
-            enabled?: boolean
-        }
+            name?: string;
+            host?: string;
+            port?: number;
+            username?: string;
+            password?: string;
+            encryption?: SmtpEncryption;
+            autoTLS?: boolean;
+            mailer?: string;
+            fromName?: string;
+            fromEmail?: string;
+            replyToName?: string;
+            replyToEmail?: string;
+            enabled?: boolean;
+        },
     ): Promise<Models.Provider> {
-        const { name, host, port, username, password, encryption, autoTLS, mailer, fromName, fromEmail, replyToName, replyToEmail, enabled } = params || {}
+        const {
+            name,
+            host,
+            port,
+            username,
+            password,
+            encryption,
+            autoTLS,
+            mailer,
+            fromName,
+            fromEmail,
+            replyToName,
+            replyToEmail,
+            enabled,
+        } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-        const apiPath = '/messaging/providers/smtp/{providerId}'.replace('{providerId}', providerId);
+        const apiPath = '/messaging/providers/smtp/{providerId}'.replace(
+            '{providerId}',
+            providerId,
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -1642,14 +1772,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1668,18 +1793,21 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      */
     async createTelesignProvider(
-        providerId: string, name: string,
+        providerId: string,
+        name: string,
         params?: {
-            from?: string,
-            customerId?: string,
-            apiKey?: string,
-            enabled?: boolean
-        }
+            from?: string;
+            customerId?: string;
+            apiKey?: string;
+            enabled?: boolean;
+        },
     ): Promise<Models.Provider> {
-        const { from, customerId, apiKey, enabled } = params || {}
+        const { from, customerId, apiKey, enabled } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -1708,14 +1836,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1736,19 +1859,24 @@ export class Messaging {
     async updateTelesignProvider(
         providerId: string,
         params?: {
-            name?: string,
-            enabled?: boolean,
-            customerId?: string,
-            apiKey?: string,
-            from?: string
-        }
+            name?: string;
+            enabled?: boolean;
+            customerId?: string;
+            apiKey?: string;
+            from?: string;
+        },
     ): Promise<Models.Provider> {
-        const { name, enabled, customerId, apiKey, from } = params || {}
+        const { name, enabled, customerId, apiKey, from } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-        const apiPath = '/messaging/providers/telesign/{providerId}'.replace('{providerId}', providerId);
+        const apiPath = '/messaging/providers/telesign/{providerId}'.replace(
+            '{providerId}',
+            providerId,
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -1769,14 +1897,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1795,18 +1918,21 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      */
     async createTextmagicProvider(
-        providerId: string, name: string,
+        providerId: string,
+        name: string,
         params?: {
-            from?: string,
-            username?: string,
-            apiKey?: string,
-            enabled?: boolean
-        }
+            from?: string;
+            username?: string;
+            apiKey?: string;
+            enabled?: boolean;
+        },
     ): Promise<Models.Provider> {
-        const { from, username, apiKey, enabled } = params || {}
+        const { from, username, apiKey, enabled } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -1835,14 +1961,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1863,19 +1984,24 @@ export class Messaging {
     async updateTextmagicProvider(
         providerId: string,
         params?: {
-            name?: string,
-            enabled?: boolean,
-            username?: string,
-            apiKey?: string,
-            from?: string
-        }
+            name?: string;
+            enabled?: boolean;
+            username?: string;
+            apiKey?: string;
+            from?: string;
+        },
     ): Promise<Models.Provider> {
-        const { name, enabled, username, apiKey, from } = params || {}
+        const { name, enabled, username, apiKey, from } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-        const apiPath = '/messaging/providers/textmagic/{providerId}'.replace('{providerId}', providerId);
+        const apiPath = '/messaging/providers/textmagic/{providerId}'.replace(
+            '{providerId}',
+            providerId,
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -1896,14 +2022,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1922,18 +2043,21 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      */
     async createTwilioProvider(
-        providerId: string, name: string,
+        providerId: string,
+        name: string,
         params?: {
             from?: string;
             accountSid?: string;
             authToken?: string;
             enabled?: boolean;
-        }
+        },
     ): Promise<Models.Provider> {
         const { from, accountSid, authToken, enabled } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -1962,14 +2086,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1995,14 +2114,19 @@ export class Messaging {
             accountSid?: string;
             authToken?: string;
             from?: string;
-        }
+        },
     ): Promise<Models.Provider> {
         const { name, enabled, accountSid, authToken, from } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-        const apiPath = '/messaging/providers/twilio/{providerId}'.replace('{providerId}', providerId);
+        const apiPath = '/messaging/providers/twilio/{providerId}'.replace(
+            '{providerId}',
+            providerId,
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2023,14 +2147,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2049,18 +2168,21 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      */
     async createVonageProvider(
-        providerId: string, name: string,
+        providerId: string,
+        name: string,
         params?: {
             from?: string;
             apiKey?: string;
             apiSecret?: string;
             enabled?: boolean;
-        }
+        },
     ): Promise<Models.Provider> {
         const { from, apiKey, apiSecret, enabled } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -2089,14 +2211,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -2122,14 +2239,19 @@ export class Messaging {
             apiKey?: string;
             apiSecret?: string;
             from?: string;
-        }
+        },
     ): Promise<Models.Provider> {
         const { name, enabled, apiKey, apiSecret, from } = params || {};
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-        const apiPath = '/messaging/providers/vonage/{providerId}'.replace('{providerId}', providerId);
+        const apiPath = '/messaging/providers/vonage/{providerId}'.replace(
+            '{providerId}',
+            providerId,
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2150,14 +2272,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2172,22 +2289,22 @@ export class Messaging {
      */
     async getProvider(providerId: string): Promise<Models.Provider> {
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-        const apiPath = '/messaging/providers/{providerId}'.replace('{providerId}', providerId);
+        const apiPath = '/messaging/providers/{providerId}'.replace(
+            '{providerId}',
+            providerId,
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2201,22 +2318,22 @@ export class Messaging {
      */
     async deleteProvider(providerId: string): Promise<{}> {
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-        const apiPath = '/messaging/providers/{providerId}'.replace('{providerId}', providerId);
+        const apiPath = '/messaging/providers/{providerId}'.replace(
+            '{providerId}',
+            providerId,
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -2229,11 +2346,19 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.LogList>}
      */
-    async listProviderLogs(providerId: string, queries?: string[]): Promise<Models.LogList> {
+    async listProviderLogs(
+        providerId: string,
+        queries?: string[],
+    ): Promise<Models.LogList> {
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-        const apiPath = '/messaging/providers/{providerId}/logs'.replace('{providerId}', providerId);
+        const apiPath = '/messaging/providers/{providerId}/logs'.replace(
+            '{providerId}',
+            providerId,
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -2242,14 +2367,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2262,11 +2382,19 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.LogList>}
      */
-    async listSubscriberLogs(subscriberId: string, queries?: string[]): Promise<Models.LogList> {
+    async listSubscriberLogs(
+        subscriberId: string,
+        queries?: string[],
+    ): Promise<Models.LogList> {
         if (typeof subscriberId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "subscriberId"');
+            throw new AppwriteException(
+                'Missing required parameter: "subscriberId"',
+            );
         }
-        const apiPath = '/messaging/subscribers/{subscriberId}/logs'.replace('{subscriberId}', subscriberId);
+        const apiPath = '/messaging/subscribers/{subscriberId}/logs'.replace(
+            '{subscriberId}',
+            subscriberId,
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -2275,14 +2403,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2296,13 +2419,11 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.TopicList>}
      */
-    async listTopics(
-        params?: {
-            queries?: string[],
-            search?: string
-        }
-    ): Promise<Models.TopicList> {
-        const { queries, search } = params || {}
+    async listTopics(params?: {
+        queries?: string[];
+        search?: string;
+    }): Promise<Models.TopicList> {
+        const { queries, search } = params || {};
 
         const apiPath = '/messaging/topics';
         const payload: Payload = {};
@@ -2316,14 +2437,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2337,9 +2453,15 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Topic>}
      */
-    async createTopic(topicId: string, name: string, subscribe?: string[]): Promise<Models.Topic> {
+    async createTopic(
+        topicId: string,
+        name: string,
+        subscribe?: string[],
+    ): Promise<Models.Topic> {
         if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -2359,14 +2481,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -2381,22 +2498,22 @@ export class Messaging {
      */
     async getTopic(topicId: string): Promise<Models.Topic> {
         if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
-        const apiPath = '/messaging/topics/{topicId}'.replace('{topicId}', topicId);
+        const apiPath = '/messaging/topics/{topicId}'.replace(
+            '{topicId}',
+            topicId,
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2414,14 +2531,19 @@ export class Messaging {
      */
     async updateTopic(
         topicId: string,
-        params?: { name?: string, subscribe?: string[] }
+        params?: { name?: string; subscribe?: string[] },
     ): Promise<Models.Topic> {
-        const { name, subscribe } = params || {}
+        const { name, subscribe } = params || {};
 
         if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
-        const apiPath = '/messaging/topics/{topicId}'.replace('{topicId}', topicId);
+        const apiPath = '/messaging/topics/{topicId}'.replace(
+            '{topicId}',
+            topicId,
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2433,14 +2555,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2454,22 +2571,22 @@ export class Messaging {
      */
     async deleteTopic(topicId: string): Promise<{}> {
         if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
-        const apiPath = '/messaging/topics/{topicId}'.replace('{topicId}', topicId);
+        const apiPath = '/messaging/topics/{topicId}'.replace(
+            '{topicId}',
+            topicId,
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -2482,11 +2599,19 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.LogList>}
      */
-    async listTopicLogs(topicId: string, queries?: string[]): Promise<Models.LogList> {
+    async listTopicLogs(
+        topicId: string,
+        queries?: string[],
+    ): Promise<Models.LogList> {
         if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
-        const apiPath = '/messaging/topics/{topicId}/logs'.replace('{topicId}', topicId);
+        const apiPath = '/messaging/topics/{topicId}/logs'.replace(
+            '{topicId}',
+            topicId,
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -2495,14 +2620,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2519,14 +2639,19 @@ export class Messaging {
      */
     async listSubscribers(
         topicId: string,
-        params?: { queries?: string[], search?: string }
+        params?: { queries?: string[]; search?: string },
     ): Promise<Models.SubscriberList> {
-        const { queries, search } = params || {}
+        const { queries, search } = params || {};
 
         if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
-        const apiPath = '/messaging/topics/{topicId}/subscribers'.replace('{topicId}', topicId);
+        const apiPath = '/messaging/topics/{topicId}/subscribers'.replace(
+            '{topicId}',
+            topicId,
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -2538,14 +2663,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2559,17 +2679,30 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Subscriber>}
      */
-    async createSubscriber(topicId: string, subscriberId: string, targetId: string): Promise<Models.Subscriber> {
+    async createSubscriber(
+        topicId: string,
+        subscriberId: string,
+        targetId: string,
+    ): Promise<Models.Subscriber> {
         if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
         if (typeof subscriberId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "subscriberId"');
+            throw new AppwriteException(
+                'Missing required parameter: "subscriberId"',
+            );
         }
         if (typeof targetId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "targetId"');
+            throw new AppwriteException(
+                'Missing required parameter: "targetId"',
+            );
         }
-        const apiPath = '/messaging/topics/{topicId}/subscribers'.replace('{topicId}', topicId);
+        const apiPath = '/messaging/topics/{topicId}/subscribers'.replace(
+            '{topicId}',
+            topicId,
+        );
         const payload: Payload = {};
         if (typeof subscriberId !== 'undefined') {
             payload['subscriberId'] = subscriberId;
@@ -2581,14 +2714,9 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -2602,27 +2730,31 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Subscriber>}
      */
-    async getSubscriber(topicId: string, subscriberId: string): Promise<Models.Subscriber> {
+    async getSubscriber(
+        topicId: string,
+        subscriberId: string,
+    ): Promise<Models.Subscriber> {
         if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
         if (typeof subscriberId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "subscriberId"');
+            throw new AppwriteException(
+                'Missing required parameter: "subscriberId"',
+            );
         }
-        const apiPath = '/messaging/topics/{topicId}/subscribers/{subscriberId}'.replace('{topicId}', topicId).replace('{subscriberId}', subscriberId);
+        const apiPath = '/messaging/topics/{topicId}/subscribers/{subscriberId}'
+            .replace('{topicId}', topicId)
+            .replace('{subscriberId}', subscriberId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2637,24 +2769,25 @@ export class Messaging {
      */
     async deleteSubscriber(topicId: string, subscriberId: string): Promise<{}> {
         if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
         if (typeof subscriberId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "subscriberId"');
+            throw new AppwriteException(
+                'Missing required parameter: "subscriberId"',
+            );
         }
-        const apiPath = '/messaging/topics/{topicId}/subscribers/{subscriberId}'.replace('{topicId}', topicId).replace('{subscriberId}', subscriberId);
+        const apiPath = '/messaging/topics/{topicId}/subscribers/{subscriberId}'
+            .replace('{topicId}', topicId)
+            .replace('{subscriberId}', subscriberId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-        }
+        };
 
-        return await this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload,
-        );
+        return await this.client.call('delete', uri, apiHeaders, payload);
     }
 }
